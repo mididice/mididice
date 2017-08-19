@@ -2,13 +2,55 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Midiyapp</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$('#roll').click(function(){
+		
+		var url = "rollDice";
+		var seq = $('#seq').val();
+		$.ajax({
+			method :'GET',
+			url: url,
+			data : "sequence="+seq,
+			type : "json",
+			beforeSend:function(data){
+				
+			},
+			success:function(data){
+				var obj = JSON.parse(data)
+				
+				for(var i = 0; i<obj.length;i++){
+					$('#seq').val(obj[i].sequence);
+					$('#dice1').text(obj[i].pupleDice);
+					$('#dice2').text(obj[i].pinkDice);
+					$('#path').text(obj[i].midiPath);
+				}
+			}	
+		});
+	});	
+});
+</script>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
+<h1>Midi Create</h1>
+<input type="radio" name="measure" value="8">8
+<input type="radio" name="measure" value="16">16
+<input type="radio" name="measure" value="24">24
 
-<P>  The time on the server is ${serverTime}. </P>
+<form action="" method="get">
+
+<div id="midiResult">
+<div id="dice1"></div>
+<div id="dice2"></div>
+<div id="path"></div>
+</div>
+<input type="hidden" id="seq" name="sequence" value="0">
+<button type="button" id="roll">Roll Dice</button>
+
+<button type="submit">generate</button>
+</form>
 </body>
 </html>
