@@ -37,6 +37,6 @@ public class HomeController {
 	}
 	@RequestMapping(value = "/m", method = RequestMethod.GET)
 	public String music() {
-		return "midi";
+		return "test";
 	}
 }
