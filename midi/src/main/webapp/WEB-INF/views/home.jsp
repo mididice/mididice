@@ -7,7 +7,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
+	var bar = 8;
+	
+	$('input[name="measure"]').click(function(){
+		bar = $('input[name="measure"]:checked').val();
+	});
+	
 	$('#roll').click(function(){
+		var seq = $('#seq').val();
+		if(seq<bar){
 		
 		var url = "rollDice";
 		var seq = $('#seq').val();
@@ -27,9 +35,13 @@ $(document).ready(function(){
 					$('#dice1').text(obj[i].pupleDice);
 					$('#dice2').text(obj[i].pinkDice);
 					$('#path').text(obj[i].midiPath);
+					$('#sequenceNumber').text(obj[i].sequence+"/"+bar);
 				}
 			}	
 		});
+		}else{
+			
+		}
 	});	
 });
 </script>
@@ -46,9 +58,10 @@ $(document).ready(function(){
 <div id="dice1"></div>
 <div id="dice2"></div>
 <div id="path"></div>
+<div id="sequenceNumber"></div>
 </div>
 <input type="hidden" id="seq" name="sequence" value="0">
-<button type="button" id="roll">Roll Dice</button>
+<button type="button" id="roll">Roll</button>
 
 <button type="submit">generate</button>
 </form>
