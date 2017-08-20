@@ -21,9 +21,6 @@ import com.yapp.midi.service.MidiSaveService;
 
 @Controller
 public class MidiController {
-	
-	@Autowired
-	MidiSaveService midisaveservice;
 
 	public static String OUTPUT_FILENAME = "yapp1456.mid";
 	public static String FILE_PATH = "";
@@ -62,40 +59,4 @@ public class MidiController {
 		return mv;
 	}
 	
-
-	@RequestMapping(value = "/res", method=RequestMethod.GET)
-	public String test(){
-		
-		return "midi2";
-	}
-	
-	//파일명 url 생성
-	@RequestMapping(value = "/res/a", method=RequestMethod.GET)
-	public String resultUrl(Model model, @RequestParam("filename") String filename){
-		//String encUrl = midisaveservice.createUrl("filename");
-		//model.addAttribute("file",encUrl);
-		return "redirect:/res/"+filename;
-	}
-	
-	@RequestMapping(value = "/res/{filename}", method=RequestMethod.GET)
-	public String resultUrl2(Model model, @PathVariable String filename){
-		model.addAttribute("file",filename);
-		return "midi";
-	}
-	/*
-	@RequestMapping(value = "/res/{encpath}", method=RequestMethod.GET)
-	public String resultUrl(Model model, @PathVariable String encpath){
-		String dcryptfile = midisaveservice.decryptPath("pb8vlnlHaBB+TkbaEvmZkA==");
-		model.addAttribute("file",dcryptfile);
-		return "midi";
-	}
-	*/
-
-	@RequestMapping(value="/aaa", method=RequestMethod.GET)
-	@ResponseBody
-	public String pathTest(HttpServletRequest request){
-		String path = request.getSession().getServletContext().getRealPath("/resources/midi");
-		return path;
-	}
-
 }
