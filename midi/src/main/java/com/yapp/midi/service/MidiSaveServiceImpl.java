@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.yapp.midi.util.Encrypt;
 
-//파일 저장 및 결과하면 url 생성
 @Service("MidiSaveService")
 public class MidiSaveServiceImpl implements MidiSaveService{
 	

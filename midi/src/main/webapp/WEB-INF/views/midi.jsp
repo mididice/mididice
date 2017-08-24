@@ -10,29 +10,38 @@
 	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/wavesurfer.min.js"></script>
 </head>
 <body>
-	<a href="#" onclick="musicOn('testmidi.mid');">(1)한마디 재생</a>
+	<a href="#">(1)한마디 재생</a>
 	<br>
-	<a href="#" onclick="musicOn('testmidi2.mid');">(2)한마디 재생</a>
+	<a href="#">(2)한마디 재생</a>
 	<br>
 	<br>
-	<a href="test1.mid">다운로드</a>
-	<br>
-	<br> 합친파일 재생? ${file}
-</body>
+	<button id="down">다운로드</button>
+	<br><br><br>
+	<div id="waveform"></div>
+<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/wavesurfer.min.js"></script>
 <script>
+	
 	var wavesurfer = WaveSurfer.create({
-		container : '#waveform',
-		waveColor : '#ffffff',
-		progressColor : 'purple'
+		container: '#waveform',
+		waveColor: 'rgba(211, 211, 211, 0.48)',
+		progressColor: '#ffffff'
 	});
-
-	wavesurfer.load('iu.mp3');
-
-	var slider = document.querySelector('#slider');
-
-	slider.oninput = function() {
-		var zoomLevel = Number(slider.value);
-		wavesurfer.zoom(zoomLevel);
-	};
+	var path = "${p}"+"${filename}"+".mp3";
+	wavesurfer.load(path);
+	wavesurfer.on('error',function(){
+		alert("파일이 존재하지 않습니다^^ 올바른경로로 접속하였는지 다시한번 확인해주세요~");
+		// ==> 추가이벤트 입력(리다이렉트, 창을 종료?, 버튼 비활성화 등등)
+	});
+	
+	function downMp3(){
+		window.open("../res/download.do?fe=${enc}");
+	}
+	
+	$(function(){
+		$("#down").on('click',function(){
+			downMp3();
+		});
+	})
 </script>
+</body>
 </html>

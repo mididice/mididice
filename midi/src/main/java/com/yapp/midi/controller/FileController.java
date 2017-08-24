@@ -26,55 +26,63 @@ import org.springframework.web.servlet.ModelAndView;
 import com.yapp.midi.service.MidiSaveService;
 import com.yapp.midi.service.MidiSaveServiceImpl;
 import com.yapp.midi.util.Encrypt;
+import com.yapp.midi.util.RandomString;
+
+/* 
+	파일 다운로드 및 결과화면 컨트롤러
+	Request : (/res?filename=파일명)  ==> (/res/randomstring) ==> mp3파일 다운, 재생 등
+*/
 
 @Controller
 public class FileController {
 	
+	RandomString r = new RandomString();
 	
-
-	@RequestMapping(value = "/res", method=RequestMethod.GET)
-	public String test(){
-
-		System.out.println();
-		return "midi2";
-	}
+	private static final int offset = 25;
 	
-	//파일명 url 생성
-	@RequestMapping(value = "/res/a", method=RequestMethod.GET)
-	public String resultUrl(Model model, @RequestParam("filename") String filename){
-		//SecretKey key = midisave.keyGenerator();
-		System.out.println();
-		//String encUrl = midisaveservice.createUrl("filename");
-		//model.addAttribute("file",encUrl);
-		//return "redirect:/res/"+filename;
-		return "midi";
-	}
-	/*
-	@RequestMapping(value = "/res/{filename}", method=RequestMethod.GET)
-	public String resultUrl2(Model model, @PathVariable String filename){
-		model.addAttribute("file",filename);
-		return "midi";
-	}*/
-	/*
-	@RequestMapping(value = "/res/{encpath}", method=RequestMethod.GET)
-	public String resultUrl(Model model, @PathVariable String encpath){
-		String dcryptfile = midisaveservice.decryptPath("pb8vlnlHaBB+TkbaEvmZkA==");
-		model.addAttribute("file",dcryptfile);
-		return "midi";
-	}
+	/*	
+	 	midi파일 병합 후, mp3파일로 변환하여 파일명을 넘겨받아야 한다!!^^
+		filename을 get방식으로 넘겨주어야 함 (예 : /res?filename=파일명)
 	*/
+	
+	@RequestMapping(value = "/res", method=RequestMethod.GET)
+	public String redirectResult(@RequestParam("filename")String filename){
+		String enc;
+		
+		if(filename.indexOf('.')==-1){
+			//파일이름이 확장자가 없는경우
+			enc = r.encrypt(filename, offset);
+		}else{
+			//파일이름이 확장자가 있는경우
+			enc = r.encrypt(filename.substring(0, filename.length()-4), offset);
+		}
+		//System.out.println(enc);
+		return "redirect:/res/"+enc;
+	}
+	
+	//파일명 변환 url 생성 (예: /res/randomstring)
+	@RequestMapping(value = "/res/{enc}", method=RequestMethod.GET)
+	public String resultUrl(Model model, @PathVariable String enc){
+		String filen = r.decrypt(enc, offset);
+		model.addAttribute("enc", enc);
+		model.addAttribute("filename",filen);
+		String playPath = "../resources/save/";
+		model.addAttribute("p",playPath);
+		return "midi"; //결과파일 ==> result file로 변경해야함
+	}
 	
 	//파일 다운로드
 	@RequestMapping(value="/res/download.do", method=RequestMethod.GET)
-	public ModelAndView download(@RequestParam("filename") String filename, HttpServletRequest request
+	public ModelAndView download(@RequestParam("fe") String enc, HttpServletRequest request
 			) throws Exception{
 		
 		//최종 mp3파일의 경로
 		String realPath = request.getSession().getServletContext().getRealPath("/resources/save/");
+
+		//File down = new File(realPath+r.decrypt(enc, offset)+".mid"); // ==> mp3로 변경해야함
+		File down = new File(realPath+r.decrypt(enc, offset)+".mp3");
 		
-		File down = new File(realPath+filename);
-		
-		System.out.println(realPath+filename);
+		//System.out.println(realPath+r.decrypt(enc, offset));
 		if(!down.canRead()){
 			throw new Exception("파일을 찾을수 없습니다(^_^)");
 			

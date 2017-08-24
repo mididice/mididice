@@ -1,7 +1,7 @@
 package com.yapp.midi.util;
 
 public class RandomString {
-	 static char[] chars = {
+	  static char[] chars = {
 		        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
 		        'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
 		        'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
@@ -10,22 +10,9 @@ public class RandomString {
 		        'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
 		        'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
 		        'U', 'V', 'W', 'X', 'Y', 'Z', '_'};
-		    
-		    public static void main(String[] args) 
-		    {
-		        String text = "filename.jsp";
-		        int offset = 30;
-		        
-		        //String enc = encrypt(text.", offset);
-		       String enc = text.substring(0, text.length()-4);
-		        System.out.println(enc);
-		        
-		        String dec = decrypt(enc, offset);
-		        System.out.println("Decrypted text: " + dec);
-		    }
 
 		    // Caesar cipher
-		    static String encrypt(String text, int offset)
+		   public String encrypt(String text, int offset)
 		    {
 		        char[] plain = text.toCharArray();
 
@@ -45,7 +32,7 @@ public class RandomString {
 		        return String.valueOf(plain);
 		    }
 
-		    static String decrypt(String cip, int offset)
+		   public String decrypt(String cip, int offset)
 		    {
 		        char[] cipher = cip.toCharArray();
 		        for (int i = 0; i < cipher.length; i++) {
