@@ -13,7 +13,7 @@
 <input type="text" name="filename">
 <input type="submit" value="submit">
 </form>
-
+<input type="button" onclick="window.open('./res/download.do?filename=testmidi.mid');">다운로드</button>
 
 
 
