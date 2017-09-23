@@ -30,6 +30,7 @@
 	wavesurfer.load(path);
 	wavesurfer.on('error',function(){
 		alert("파일이 존재하지 않습니다^^ 올바른경로로 접속하였는지 다시한번 확인해주세요~");
+		location.href="/midi";
 		// ==> 추가이벤트 입력(리다이렉트, 창을 종료?, 버튼 비활성화 등등)
 	});
 	
