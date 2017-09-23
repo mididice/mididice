@@ -25,6 +25,6 @@ public class MidiToMp3Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return dirPath+midiPath+",mp3";
+		return dirPath+midiPath+".mp3";
 	}
 }

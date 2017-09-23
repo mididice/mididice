@@ -57,7 +57,8 @@ public class MidiController {
 			}			
 		}
 		try {
-			midiName = gfn.createName()+".midi";
+			filename = gfn.createName();
+			midiName = filename +".mid";
 			MidiFileManager.savePatternToMidi(resultMidi, new File(resultPath+midiName));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -65,7 +66,7 @@ public class MidiController {
 		
 		
 		try {
-			mp3Name = toMp3.midiToMp3(resultPath+midiName);
+			mp3Name = toMp3.midiToMp3(resultPath+filename);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
