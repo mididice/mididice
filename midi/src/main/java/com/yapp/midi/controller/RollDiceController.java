@@ -26,7 +26,7 @@ public class RollDiceController {
 		int rightDice = getDiceResult();
 		int leftDice = getDiceResult();
 		jobj.put("pupleDice", leftDice);
-		jobj.put("midiPath", rightDice+String.valueOf(leftDice)+".midi");
+		jobj.put("midiPath", rightDice+String.valueOf(leftDice)+".mid");
 		jobj.put("pattern", rightDice+String.valueOf(leftDice)+".png");
 		jobj.put("pinkDice", rightDice);
 		jobj.put("sequence", seq+1);

@@ -44,6 +44,11 @@ public class HomeController {
 		
 		return "home";
 	}
+//	@RequestMapping(value = "/result", method = RequestMethod.GET)
+//	public String result(Locale locale, Model model) {
+//		
+//		return "result";
+//	}
 	@RequestMapping(value = "/m", method = RequestMethod.GET)
 	public String music()   {
 		return "test";

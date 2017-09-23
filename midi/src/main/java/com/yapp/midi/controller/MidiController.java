@@ -30,7 +30,7 @@ public class MidiController {
 	 * outfile name
 	 * 
 	 * */
-	@RequestMapping(value="/append", method=RequestMethod.GET)
+	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public ModelAndView appendMidiTest(
 			@RequestParam(value="midis")String[] names,
 			@RequestParam(value="seconds")String seconds,
@@ -47,8 +47,8 @@ public class MidiController {
 		String midiName = null;
 		String mp3Name =  null;
 		
-		String resultPath = request.getSession().getServletContext().getRealPath("/resources/yapp");
-		String midiPath = request.getSession().getServletContext().getRealPath("/resources/midi");
+		String resultPath = request.getSession().getServletContext().getRealPath("/resources/save/");
+		String midiPath = request.getSession().getServletContext().getRealPath("/resources/midi/");
 		
 		if(names!=null){
 			for(int i = 0; i<names.length; i++){
@@ -72,7 +72,7 @@ public class MidiController {
 		
 		
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("result.jsp");
+		mv.setViewName("result");
 		mv.addObject("midiFile", mp3Name);
 		mv.addObject("seconds", seconds);
 		mv.addObject("bar", bar);
