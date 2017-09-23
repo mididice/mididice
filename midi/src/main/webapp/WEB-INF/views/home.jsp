@@ -1,9 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <!Doctype html>
 <html><head>
 <meta charset="UTF-8">
-<meta name="description" content="LiST">
+<meta name="description" content="midi">
 <!-- Mobile Specific Meta -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -66,18 +67,102 @@ height:20em;}
     border:none;
     color: #ccc;
     background: linear-gradient( to right, #540069, #ff0076 )}
+/* The Modal (background) */
+.modal {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.pattern_img{
+	width: 170px;
+}
+#waveform{
+	width:850px;
+	height:170px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+#patterns{
+	float:right;
+}
+
+.play-button-icon {	
+	opacity:0;
+  position: absolute; z-index: 2;
+  width: 50px; height: 50px;
+  left: 0; right: 0; bottom: 65px; margin: auto; /* center */
+}
+.play-button-icon:hover {
+  opacity: 1;
+}
+.play_img{
+	width:50px;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type='text/javascript' src='//www.midijs.net/lib/midi.js'></script>
 <script>
 $(document).ready(function(){
 	var bar = 8;
-	
+	var bpm = 120;
+	var seconds = 30;
 	$('input[name="measure"]').click(function(){
 		bar = $('input[name="measure"]:checked').val();
+	});
+	$('.bar').click(function(){
+		bar = $(this).text();
+		bar = bar*=1;
+	});
+	$('.bpm').click(function(){
+		bpm = $(this).text();
+	});
+	$('#startBtn').click(function(){
+
+		$('#second').append(seconds);
+		$('#bar').append(bar);
+		$('#bpm').append(bpm);
+		
+		$('#secondData').val(seconds);
+		$('#barData').val(bar);
+		$('#bpmData').val(bpm);
+		
+		$('#sequenceNumber').append("0/"+bar);
+		$('#myModal').css('display','none');
 	});
 	
 	$('#roll').click(function(){
 		var seq = $('#seq').val();
+		console.log(seq,bar)
 		if(seq<bar){
 		
 		var url = "rollDice";
@@ -87,6 +172,7 @@ $(document).ready(function(){
 			url: url,
 			data : "sequence="+seq,
 			type : "json",
+			async:false,
 			beforeSend:function(data){
 				
 			},
@@ -98,9 +184,30 @@ $(document).ready(function(){
 					$('#dice1').text(obj[i].pupleDice);
 					$('#dice2').text(obj[i].pinkDice);
 					$('#path').text(obj[i].midiPath);
+					$('#midiNames').append("<input type='hidden' name='midis' value='"+obj[i].midiPath+"'>");
 					$('#sequenceNumber').text(obj[i].sequence+"/"+bar);
+					/* $('#patterns').append(obj[i].pattern); */
+					$('#patterns').append("<a href='#' onClick='MIDIjs.play(\"${pageContext.servletContext.contextPath}/resources/midi/sample1.mid\");'>"
+						+"<img src='${pageContext.servletContext.contextPath}/resources/images/patterns/"
+						+obj[i].pattern+"' class='pattern_img' id='pattern"+seq+"'>");
+					/*
+					"<div class='play-button-icon'>"+
+					"<img class='play_img' src='http://wptf.com/wp-content/uploads/2014/05/play-button.png'></div>")
+					+obj[i].midiPath+
+					*/
+					var targetImg = $('#patterns img')
+					if ($(targetImg).length >= 6) {
+						targetImg.eq(0).remove()
+					}
+					if(seq==bar-1){
+						$('.roll_dice_bottom').empty();
+						$('.roll_dice_bottom').append("<button type='button' id='roll' class='roll_btn'>Result</button>");
+					}
 				}
-			}	
+			},
+			error: function(){
+				console.log('error:')
+			}
 		});
 		}else{
 			
@@ -108,44 +215,52 @@ $(document).ready(function(){
 	});	
 });
 </script>
+
 </head>
 <body>
 <!-- header -->
 	<header>
 		<div class="header" id="header">
 			<div class="midiyapp_logo">midiYAPP</div>
-			<div class="midiyapp_reset">RESET</div>
+			<div class="midiyapp_reset"><a href="/midi">RESET</a></div>
 		</div>
 	</header>
 	<!-- center -->
 	<section>
 		<div class="container">
+		<div id="myModal" class="modal">
+  			<!-- Modal content -->
+  			<div class="modal-content">
+    		<p>시작 전 곡의 길이 정하기</p>
+    		마디 : <span class="bar">8</span>|<span class="bar">12</span>|<span class="bar">16</span>
+    		<p></p>
+    		bpm: <span class="bpm">80</span>|<span class="bpm">120</span>|<span class="bpm">150</span>
+    		<button id="startBtn" class="start_btn">시작하기</button>
+  			</div>
+		</div>
 			<div class="midi_content">
 				<div class="midi_setting_left">
-					
-					<div style=" padding-top:1.5em; margin-bottom: 1.4em;">
+					<div style="margin-bottom: 1.4em;padding-top:1.5em; ">
+						<div>
+							<p class="play_condi_title">second</p>
+							<p class="play_condi_result" id="second"></p>
+						</div>
+					</div>
+					<div style="margin-bottom: 1.4em;">
 						<div>
 							<p class="play_condi_title">BAR</p>
-							<p class="play_condi_result">16</p>
+							<p class="play_condi_result" id="bar"></p>
 						</div>
 					</div>
 					<div style=" margin-bottom: 1.4em;">
 						<div>
 							<p class="play_condi_title">BPM</p>
-							<p class="play_condi_result">120</p>
-						</div>
-					</div>
-					<div style=" margin-bottom: 1.4em;">
-						<div>
-							<p class="play_condi_title">BEAT</p>
-							<p class="play_condi_result">type A</p>
+							<p class="play_condi_result" id="bpm"></p>
 						</div>
 					</div>
 				</div>
 				<div class="midi_dice_center">
-					<div class="midi_dice_left" style="
-    margin-right: 20px;
-">
+					<div class="midi_dice_left" style="margin-right: 20px;">
 					</div>
 					<div class="midi_dice_right">
 					</div>
@@ -154,86 +269,32 @@ $(document).ready(function(){
 				<div class="midi_current_right">
 					<div id="midiResult" class="midi_result">
 						
-						<div class="sequence_number" id="sequenceNumber">8/8</div>
+						<div class="sequence_number" id="sequenceNumber"></div>
 						<div class="sequence_bar">
 							<div id="seqBar"></div>
 						</div>
-						<div class="roll_dice_bottom">
-							<button type="button" id="roll" class="roll_btn">Roll</button>						
-						</div>
-						<input type="hidden" id="seq" name="sequence" value="8">
+						<form action="append" method="get">
+							<div class="roll_dice_bottom">
+								<button type="button" id="roll" class="roll_btn">Roll</button>						
+							</div>
+							<div id="midiNames"></div>
+							<input type="hidden" id="secondData" name="seconds" value="">
+							<input type="hidden" id="bpmData" name="bpm" value="">
+							<input type="hidden" id="barData" name="bar" value="">
 							<div id="dice1">1</div>
 							<div id="dice2">6</div>
-							<div id="path">61.midi</div>
+							<div id="path">61.midi</div>		
+						</form>
+						<input type="hidden" id="seq" name="sequence" value="0">
 					</div>
 				</div>
 			</div>
+			<!-- pattern -->
 			<div id="waveform">
-		<wave style="display: block; position: relative; user-select: none; height: 128px; overflow-x: auto; overflow-y: hidden;"><canvas width="0" height="160" style="position: absolute; z-index: 1; left: 0px; top: 0px; bottom: 0px; width: 0px;"></canvas><wave style="position: absolute; z-index: 2; left: 0px; top: 0px; bottom: 0px; overflow: hidden; width: 0px; display: block; box-sizing: border-box; border-right: 1px solid rgb(255, 255, 255);"><canvas width="0" height="160" style="width: 0px;"></canvas></wave></wave></div>
-		<!-- bottom -->
-		<div>
-		</div>
-		</div>
+				<div id="patterns">
+				</div>
+			</div>
+			</div>
 	</section>
-	<!-- Scripts -->
-			
-			<!--<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>-->
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<!--<script src="assets/js/main.js"></script>-->
-			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.6/wavesurfer.min.js"></script>
-			<script>
-				/* var _showPage = function(){ 
-					var loader = $("div.loader"); 
-					loader.css("display","none");
-					$("#play_btn, #share_btn, #down_btn").css('cursor','default');
-					$("#play_btn, #share_btn, #down_btn").attr('disabled',false);
-				};
-
-				var wavesurfer = WaveSurfer.create({
-					container: '#waveform',
-					waveColor: 'rgba(211, 211, 211, 0.48)',
-					progressColor: 'rgba(255, 51, 126, 0.59)',
-					cursorColor: '#fff'
-				});
-				wavesurfer.load('iu.mp3');
-				wavesurfer.on('ready',function(){
-					_showPage();
-					$("#muz").fadeIn();
-				});
-			
-				$(function(){
-					$("#play_btn, #share_btn, #down_btn").css('cursor','not-allowed');
-					$("#play_btn, #share_btn, #down_btn").attr('disabled',true);
-					var filter = "win16|win32|win64|mac";
-					/*if(navigator.platform){ //loading event
-						if(0 > filter.indexOf(navigator.platform.toLowerCase())){
-							//ëª¨ë°”ì¼ì¼ ê²½ìš°
-							setTimeout(_showPage,20000);
-						}else{
-							//PCí™”ë©´ì¼ ê²½ìš°
-							setTimeout(_showPage,3500);
-						}
-					}*/
-					/*
-					$(window).resize(function(){
-						wavesurfer.zoom(1);
-					});
-					
-					$("#play_btn").click(function(){
-						wavesurfer.playPause();
-					});
-					
-					$("#down_btn").click(function(){
-						location.href="iu.mp3";
-					});
-					
-					$("#share_btn").click(function(){
-						alert("ì¤€ë¹„ì¤‘ìž…ë‹ˆë‹¤ ^_^ ==> facebook, soundcloud, instagram, naver blog, kakaotalk, kakaostory, íŠ¸ìœ„í„°, ìŒì•…ê³µìœ&nbsp; sns ë“±");
-					});
-				}); */
-						
-			</script>
-
-</body></html>
+	</body>
+</html>

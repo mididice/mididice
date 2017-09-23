@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.yapp.midi.util.*;
+
 @Controller
 public class MidiController {
 
@@ -29,13 +31,21 @@ public class MidiController {
 	 * 
 	 * */
 	@RequestMapping(value="/append", method=RequestMethod.GET)
-	public ModelAndView appendMidiTest(@RequestParam(value="names")String[] names,
+	public ModelAndView appendMidiTest(
+			@RequestParam(value="midis")String[] names,
+			@RequestParam(value="seconds")String seconds,
+			@RequestParam(value="bar")String bar,
+			@RequestParam(value="bpm")String bpm,
 			HttpServletRequest request ) throws IOException, InvalidMidiDataException{
 		
+		GenerateFileName gfn = new GenerateFileName();
+		MidiToMp3Controller toMp3 = new MidiToMp3Controller();
 		
 		Pattern patternOne = null;
 		Pattern resultMidi = new Pattern();
 		String filename = null;
+		String midiName = null;
+		String mp3Name =  null;
 		
 		String resultPath = request.getSession().getServletContext().getRealPath("/resources/yapp");
 		String midiPath = request.getSession().getServletContext().getRealPath("/resources/midi");
@@ -47,13 +57,26 @@ public class MidiController {
 			}			
 		}
 		try {
-			MidiFileManager.savePatternToMidi(resultMidi, new File(resultPath+OUTPUT_FILENAME));
+			midiName = gfn.createName()+".midi";
+			MidiFileManager.savePatternToMidi(resultMidi, new File(resultPath+midiName));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		
+		try {
+			mp3Name = toMp3.midiToMp3(resultPath+midiName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("result.jsp");
+		mv.addObject("midiFile", mp3Name);
+		mv.addObject("seconds", seconds);
+		mv.addObject("bar", bar);
+		mv.addObject("bpm", bpm);
 		return mv;
 	}
 	

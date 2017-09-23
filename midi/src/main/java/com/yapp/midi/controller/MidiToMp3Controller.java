@@ -2,8 +2,6 @@ package com.yapp.midi.controller;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +15,7 @@ public class MidiToMp3Controller {
 	private final static String dirPath = "../resources/save";
 
 	@RequestMapping(value = "/midiToMp3", method=RequestMethod.GET)
-	private String midiToMp3(@RequestParam(value="midi")String midiPath, HttpServletRequest httpServletRequest) {
+	public String midiToMp3(@RequestParam(value="midi")String midiPath) {
 		// TODO Auto-generated method stub
 		try {
 			//변수 command는 midi를 mp3로 변환하는 리눅스 명령어이 
