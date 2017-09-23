@@ -236,9 +236,9 @@ width: 1140px;
 				<div class="midi_res_btn">
 					<div>
 						<a href="javascript:wavesurfer.playPause()"><img src="${pageContext.servletContext.contextPath}/resources/images/play.png"></a>
-						<img src="${pageContext.servletContext.contextPath}/resources/images/pause.png">
-						<img src="${pageContext.servletContext.contextPath}/resources/images/stop.png">
-						<img src="${pageContext.servletContext.contextPath}/resources/images/forward.png">
+						<a id="kakaostory-share-button" href="javascript:;"><img src="${pageContext.servletContext.contextPath}/resources/images/pause.png"></a>
+						<a id="kakao-link-btn" href="javascript:;"><img src="${pageContext.servletContext.contextPath}/resources/images/stop.png"></a>
+						<a id="facebook-link-btn" href="javascript:sharefb('http://modestpt.esy.es/h');"><img src="${pageContext.servletContext.contextPath}/resources/images/forward.png"></a>
 					</div>
 				</div>
 				</div>
@@ -259,7 +259,12 @@ width: 1140px;
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<!--<script src="assets/js/main.js"></script>-->
 			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.6/wavesurfer.min.js"></script>
+			<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 			<script>
+				function sharefb(url){
+		            window.open("http://www.facebook.com/sharer/sharer.php?u="+url)
+		         }
+			
 				var _showPage = function(){ 
 					var loader = $("div.loader"); 
 					loader.css("display","none");
@@ -277,6 +282,11 @@ width: 1140px;
 				wavesurfer.on('ready',function(){
 					_showPage();
 					$("wave:first-child").css('height','25px');
+				});
+				
+				wavesurfer.on('error',function(){
+					alert("파일이 존재하지 않습니다^^ 올바른경로로 접속하였는지 다시한번 확인해주세요~");
+					// ==> 추가이벤트 입력(리다이렉트, 창을 종료?, 버튼 비활성화 등등)
 				});
 			
 				$(function(){
@@ -310,6 +320,29 @@ width: 1140px;
 						alert("준비중입니다 ^_^ ==> facebook, soundcloud, instagram, naver blog, kakaotalk, kakaostory, 트위터, 음악공유 sns 등");
 					});
 				});
+				
+				//<![CDATA[
+		          Kakao.init('bba6ccd8e367fee148055faeb22bdbca');
+		          Kakao.Link.createTalkLinkButton({
+		            container: '#kakao-link-btn',
+		            label: '카카오톡^^',
+		            image: {
+		              src: "http://dn.api1.kage.kakao.co.kr/14/dn/btqa9B90G1b/GESkkYjKCwJdYOkLvIBKZ0/o.jpg",
+		              width: '300',
+		              height: '200'
+		            },
+		            webButton: {
+		              text: '일루왕~',
+		              url: 'http://modestpt.esy.es/h'
+		            }
+		          });
+				  //]]>
+					// 스토리 공유 버튼을 생성합니다.
+					Kakao.Story.createShareButton({
+					  container: '#kakaostory-share-button',
+					  url: 'https://developers.kakao.com',
+					  text: '아우'
+					});
 						
 			</script>
 	</body>
