@@ -23,11 +23,12 @@ public class RollDiceController {
 	public String getRollTest(@RequestParam(value = "sequence")int seq ,HttpServletRequest httpServletRequest){
 		JSONArray jarr = new JSONArray();
 		JSONObject jobj = new JSONObject();
-		int pinkDice = getDiceResult();
-		int pupleDice = getDiceResult();
-		jobj.put("pupleDice", pupleDice);
-		jobj.put("midiPath", pinkDice+String.valueOf(pupleDice)+".midi");
-		jobj.put("pinkDice", pinkDice);
+		int rightDice = getDiceResult();
+		int leftDice = getDiceResult();
+		jobj.put("pupleDice", leftDice);
+		jobj.put("midiPath", rightDice+String.valueOf(leftDice)+".midi");
+		jobj.put("pattern", rightDice+String.valueOf(leftDice)+".png");
+		jobj.put("pinkDice", rightDice);
 		jobj.put("sequence", seq+1);
 		jarr.add(jobj);
 		return jarr.toString();
