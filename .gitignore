@@ -2,4 +2,5 @@
 classes/
 .settings/
 .classpath
-/target/
+target/
+
