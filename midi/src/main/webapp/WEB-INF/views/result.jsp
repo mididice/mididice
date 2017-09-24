@@ -236,9 +236,8 @@ width: 1140px;
 				<div class="midi_res_btn">
 					<div>
 						<a href="javascript:wavesurfer.playPause()"><img src="${pageContext.servletContext.contextPath}/resources/images/play.png"></a>
-						<a id="kakaostory-share-button" href="javascript:;"><img src="${pageContext.servletContext.contextPath}/resources/images/pause.png"></a>
-						<a id="kakao-link-btn" href="javascript:;"><img src="${pageContext.servletContext.contextPath}/resources/images/stop.png"></a>
-						<a id="facebook-link-btn" href="javascript:sharefb('http://modestpt.esy.es/h');"><img src="${pageContext.servletContext.contextPath}/resources/images/forward.png"></a>
+						<a id="" href="javascript:;"><img src="${pageContext.servletContext.contextPath}/resources/images/download.png"></a>
+						<a id="facebook-link-btn" href="javascript:sharefb('http://modestpt.esy.es/h');"><img src="${pageContext.servletContext.contextPath}/resources/images/share.png"></a>
 					</div>
 				</div>
 				</div>

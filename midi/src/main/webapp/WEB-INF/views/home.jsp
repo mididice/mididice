@@ -44,8 +44,8 @@ background-size: 40px 15px;}
 .midiyapp_reset{ text-align:right; }
 .container{    background: linear-gradient( to right, #d17cac, #69349c );
     background-position: center center;
-    background-size: cover; height: 46em;}
-.midi_content{ padding-top: 20px; background-color:#311a47; display:flex;}
+    background-size: cover; height: 46.7em;}
+.midi_content{  background-color:#311a47; display:flex;}
 .midi_setting_left{ display: inline-block;background-color:#69349c; width:12%; padding: 0 65px;
     height: 20em;
     margin: 7em;
@@ -158,6 +158,15 @@ height:20em;}
 	height:110px;
 }
 .start_btn{ cursor:pointer;}
+
+.holic_num{ width: 170px;
+    padding-left: 84px;
+    padding-right: 84px;
+    margin: 0; float:left; height:inherit; color:#311a47; font-size:20px; }
+.progressNumber{
+	height:30px;
+	background-color: #69349c;
+}
 #waveform_set{
 	width:850px;
 	height:170px;
@@ -290,7 +299,7 @@ $(document).ready(function(){
 					$('#midiNames').append("<input type='hidden' name='midis' value='"+obj[i].midiPath+"'>");
 					$('#sequenceNumber').text(obj[i].sequence+"/"+bar);
 					/* $('#patterns').append(obj[i].pattern); */
-					$('#patterns').append("<a href='#' onClick='MIDIjs.play(\"${pageContext.servletContext.contextPath}/resources/midi/sample1.mid\");'>"
+					$('#patterns').append("<a href='#' onClick='MIDIjs.play(\"${pageContext.servletContext.contextPath}/resources/midi/"+obj[i].midiPath+"\");'>"
 						+"<img src='${pageContext.servletContext.contextPath}/resources/images/patterns/"
 						+obj[i].pattern+"' class='pattern_img' id='pattern"+seq+"'>");
 					/*
@@ -308,6 +317,78 @@ $(document).ready(function(){
 					}
 					graph=graph+per;
 					$('#seqBar').width(graph+"%");
+				}
+				if(seq==0){
+					$('#holic1').empty();
+					$('#holic2').empty();
+					$('#holic3').empty();
+					$('#holic4').empty();
+					$('#holic5').empty();
+					$('#holic6').empty();
+					$('#holic7').empty();
+					$('#holic8').empty();
+					$('#holic9').empty();
+					$('#holic4').text("1");
+					$('#holic5').text("2");
+					$('#holic6').text("3");
+					$('#holic7').text("4");
+					$('#holic8').text("5");
+					$('#holic9').text("6");
+				}else if(seq==1){
+					$('#holic1').empty();
+					$('#holic2').empty();
+					$('#holic3').empty();
+					$('#holic4').empty();
+					$('#holic5').empty();
+					$('#holic6').empty();
+					$('#holic7').empty();
+					$('#holic8').empty();
+					$('#holic9').empty();
+					$('#holic3').text("1");
+					$('#holic4').text("2");
+					$('#holic5').text("3");
+					$('#holic6').text("4");
+					$('#holic7').text("5");
+					$('#holic8').text("6");
+					$('#holic9').text("7");
+				}else if(seq==2){
+					$('#holic1').empty();
+					$('#holic2').empty();
+					$('#holic3').empty();
+					$('#holic4').empty();
+					$('#holic5').empty();
+					$('#holic6').empty();
+					$('#holic7').empty();
+					$('#holic8').empty();
+					$('#holic9').empty();
+					$('#holic2').text("1");
+					$('#holic3').text("2");
+					$('#holic4').text("3");
+					$('#holic5').text("4");
+					$('#holic6').text("5");
+					$('#holic7').text("6");
+					$('#holic8').text("7");
+					$('#holic9').text("8");
+				}else{
+					$('#holic1').empty();
+					$('#holic2').empty();
+					$('#holic3').empty();
+					$('#holic4').empty();
+					$('#holic5').empty();
+					$('#holic6').empty();
+					$('#holic7').empty();
+					$('#holic8').empty();
+					$('#holic9').empty();
+					var text= seq-2;
+					$('#holic1').text(text++);
+					$('#holic2').text(text++);
+					$('#holic3').text(text++);
+					$('#holic4').text(text++);
+					$('#holic5').text(text++);
+					$('#holic6').text(text++);
+					$('#holic7').text(text++);
+					$('#holic8').text(text++);
+					$('#holic9').text(text++);
 				}
 			},
 			error: function(){
@@ -415,6 +496,17 @@ $(document).ready(function(){
 				</div>
 			</div>
 			<!-- pattern -->
+			<div class="progressNumber">
+				<div class="holic_num" id="holic1"></div>
+				<div class="holic_num" id="holic2"></div>
+				<div class="holic_num" id="holic3"></div>
+				<div class="holic_num" id="holic4"></div>
+				<div class="holic_num" id="holic5">1</div>
+				<div class="holic_num" id="holic6">2</div>
+				<div class="holic_num" id="holic7">3</div>
+				<div class="holic_num" id="holic8">4</div>
+				<div class="holic_num" id="holic9">5</div>
+			</div>
 			<div id="waveform_set">
 				<div id="patterns">
 				</div>
