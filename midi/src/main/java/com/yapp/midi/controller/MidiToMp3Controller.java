@@ -1,6 +1,9 @@
 package com.yapp.midi.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,12 +22,55 @@ public class MidiToMp3Controller {
 		// TODO Auto-generated method stub
 		try {
 			//변수 command는 midi를 mp3로 변환하는 리눅스 명령어이 
-			String command = "timidity -Ow -o -"+midiPath+".mid | lame - "+midiPath+".mp3";
-			Process p = Runtime.getRuntime().exec(command);
-		} catch (IOException e) {
+			//String command = "timidity -Ow -o - "+midiPath+".mid | lame - "+midiPath+".mp3";
+			String[] command = {
+					"/bin/sh",
+					"-c",
+					"timidity -Ow -o - "+midiPath+".mid | lame - "+midiPath+".mp3"
+					};
+			System.out.println(command);
+			Runtime rt = Runtime.getRuntime();
+			
+			Process p = rt.exec(command);
+			StreamGobbler errorGobbler = new StreamGobbler(p.getErrorStream(), "error");
+			StreamGobbler outputGobbler = new StreamGobbler(p.getInputStream(), "output");
+			
+			errorGobbler.start();
+			outputGobbler.start();
+			
+			int ev = p.waitFor();
+			System.out.println("exitValue:"+ev);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return midiPath+".mp3";
 	}
+}
+class StreamGobbler extends Thread
+{
+    InputStream is;
+    String type;
+    
+    StreamGobbler(InputStream is, String type)
+    {
+        this.is = is;
+        this.type = type;
+    }
+    
+    public void run()
+    {
+        try
+        {
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String line=null;
+            while ( (line = br.readLine()) != null)
+                System.out.println(type + ">" + line);    
+            } catch (IOException ioe)
+              {
+                ioe.printStackTrace();  
+              }
+    }
 }
