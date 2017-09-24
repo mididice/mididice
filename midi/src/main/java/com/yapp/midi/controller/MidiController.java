@@ -32,7 +32,7 @@ public class MidiController {
 	 * */
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public ModelAndView appendMidiTest(
-			@RequestParam(value="midis")String[] names,
+			@RequestParam(value="midis")String[] names, //11.midi
 			@RequestParam(value="seconds")String seconds,
 			@RequestParam(value="bar")String bar,
 			@RequestParam(value="bpm")String bpm,
@@ -70,7 +70,18 @@ public class MidiController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		String[] imgNames = new String[names.length];
+		try {
+			for(int i =0; i<names.length; i++){
+				String name[] = names[i].split(".mid");
+				imgNames[i] = name[0];
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		for(int i =0; i<imgNames.length;i++){
+			System.out.println(imgNames[i]);
+		}
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("result");

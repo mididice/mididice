@@ -328,13 +328,28 @@ $(document).ready(function(){
 					$('#holic7').empty();
 					$('#holic8').empty();
 					$('#holic9').empty();
+					$('#holic5').text("1");
+					$('#holic6').text("2");
+					$('#holic7').text("3");
+					$('#holic8').text("4");
+					$('#holic9').text("5");
+				}else if(seq==1){
+					$('#holic1').empty();
+					$('#holic2').empty();
+					$('#holic3').empty();
+					$('#holic4').empty();
+					$('#holic5').empty();
+					$('#holic6').empty();
+					$('#holic7').empty();
+					$('#holic8').empty();
+					$('#holic9').empty();
 					$('#holic4').text("1");
 					$('#holic5').text("2");
 					$('#holic6').text("3");
 					$('#holic7').text("4");
 					$('#holic8').text("5");
 					$('#holic9').text("6");
-				}else if(seq==1){
+				}else if(seq==2){
 					$('#holic1').empty();
 					$('#holic2').empty();
 					$('#holic3').empty();
@@ -351,7 +366,7 @@ $(document).ready(function(){
 					$('#holic7').text("5");
 					$('#holic8').text("6");
 					$('#holic9').text("7");
-				}else if(seq==2){
+				}else if(seq==3){
 					$('#holic1').empty();
 					$('#holic2').empty();
 					$('#holic3').empty();
@@ -379,7 +394,7 @@ $(document).ready(function(){
 					$('#holic7').empty();
 					$('#holic8').empty();
 					$('#holic9').empty();
-					var text= seq-2;
+					var text= seq-3;
 					$('#holic1').text(text++);
 					$('#holic2').text(text++);
 					$('#holic3').text(text++);
