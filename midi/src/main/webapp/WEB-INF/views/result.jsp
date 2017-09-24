@@ -230,7 +230,7 @@ width: 1140px;
 						<p class="set_value_result">${seconds}</p>
 					</div>
 					<div class="">
-						<img class="midi_result_img" src="${pageContext.servletContext.contextPath}/resources/images/result1.png">
+						<img class="midi_result_img" src="${pageContext.servletContext.contextPath}/resources/resimg/${resImg}">
 					</div>
 				</div>
 				<div class="midi_res_btn">

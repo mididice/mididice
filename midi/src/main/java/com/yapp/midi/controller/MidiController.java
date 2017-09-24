@@ -26,7 +26,7 @@ public class MidiController {
 	public static String FILE_PATH = "";
 	/*
 	 * 
-	 * iputfile list(max 36), 타악기
+	 * iputfile list(max 36)
 	 * outfile name
 	 * 
 	 * */
@@ -83,12 +83,17 @@ public class MidiController {
 			System.out.println(imgNames[i]);
 		}
 		
+		ImageMerge i = new ImageMerge();
+		String resImg = i.returndeMergeImage(request, bar, imgNames, filename);
+		System.out.println(resImg);
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("result");
 		mv.addObject("midiFile", mp3Name);
 		mv.addObject("seconds", seconds);
 		mv.addObject("bar", bar);
 		mv.addObject("bpm", bpm);
+		mv.addObject("resImg", resImg);
 		return mv;
 	}
 	
