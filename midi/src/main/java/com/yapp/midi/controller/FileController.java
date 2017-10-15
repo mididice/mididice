@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yapp.midi.service.MidiSaveService;
 import com.yapp.midi.service.MidiSaveServiceImpl;
@@ -46,7 +47,7 @@ public class FileController {
 	*/
 	
 	@RequestMapping(value = "/res", method=RequestMethod.GET)
-	public String redirectResult(@RequestParam("filename")String filename){
+	public String redirectResult(@RequestParam("filename")String filename, RedirectAttributes redi){
 		String enc;
 		
 		if(filename.indexOf('.')==-1){
@@ -57,6 +58,7 @@ public class FileController {
 			enc = r.encrypt(filename.substring(0, filename.length()-4), offset);
 		}
 		//System.out.println(enc);
+		redi.addAttribute("name", "name");
 		return "redirect:/res/"+enc;
 	}
 	
@@ -68,7 +70,7 @@ public class FileController {
 		model.addAttribute("filename",filen);
 		String playPath = "../resources/save/";
 		model.addAttribute("p",playPath);
-		return "midi"; //결과파일 ==> result file로 변경해야함
+		return "result"; //결과파일 ==> result file로 변경해야함
 	}
 	
 	//파일 다운로드

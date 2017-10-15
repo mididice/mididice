@@ -162,7 +162,7 @@ height:20em;}
 .holic_num{ width: 170px;
     padding-left: 84px;
     padding-right: 84px;
-    margin: 0; float:left; height:inherit; color:#311a47; font-size:20px; }
+    margin: 0; float:left; height:inherit; color:#311a47; font-size:20px; font-weight:bold;}
 .progressNumber{
 	height:30px;
 	background-color: #69349c;
@@ -194,25 +194,25 @@ height:20em;}
 <script>
 function calc_sec(bar,bpm){
 	if(bar==9){
-		if(bpm==120){
+		if(bpm==80){
 			seconds = 16;
-		}else if(bpm==150){
+		}else if(bpm==120){
 			seconds = 13;
 		}else{
 			seconds = 11;
 		}
 	}else if(bar == 16){
-		if(bpm==120){
+		if(bpm==80){
 			seconds = 32;
-		}else if(bpm==150){
+		}else if(bpm==120){
 			seconds = 26;
 		}else{
 			seconds = 21;
 		}
 	}else{
-		if(bpm==120){
+		if(bpm==80){
 			seconds = 50;
-		}else if(bpm==150){
+		}else if(bpm==120){
 			seconds = 40;
 		}else{
 			seconds = 33;
@@ -225,7 +225,7 @@ $(document).on("click","#result",function() {
 });
 $(document).ready(function(){
 	var bar = 9;
-	var bpm = 120;
+	var bpm = 80;
 	var seconds = 16;
 	var graph = 0;
 	$('input[name="measure"]').click(function(){
@@ -318,31 +318,16 @@ $(document).ready(function(){
 					graph=graph+per;
 					$('#seqBar').width(graph+"%");
 				}
+				
+				
 				if(seq==0){
-					$('#holic1').empty();
-					$('#holic2').empty();
-					$('#holic3').empty();
-					$('#holic4').empty();
-					$('#holic5').empty();
-					$('#holic6').empty();
-					$('#holic7').empty();
-					$('#holic8').empty();
-					$('#holic9').empty();
 					$('#holic5').text("1");
 					$('#holic6').text("2");
 					$('#holic7').text("3");
 					$('#holic8').text("4");
 					$('#holic9').text("5");
 				}else if(seq==1){
-					$('#holic1').empty();
-					$('#holic2').empty();
-					$('#holic3').empty();
-					$('#holic4').empty();
-					$('#holic5').empty();
-					$('#holic6').empty();
-					$('#holic7').empty();
-					$('#holic8').empty();
-					$('#holic9').empty();
+					
 					$('#holic4').text("1");
 					$('#holic5').text("2");
 					$('#holic6').text("3");
@@ -350,15 +335,6 @@ $(document).ready(function(){
 					$('#holic8').text("5");
 					$('#holic9').text("6");
 				}else if(seq==2){
-					$('#holic1').empty();
-					$('#holic2').empty();
-					$('#holic3').empty();
-					$('#holic4').empty();
-					$('#holic5').empty();
-					$('#holic6').empty();
-					$('#holic7').empty();
-					$('#holic8').empty();
-					$('#holic9').empty();
 					$('#holic3').text("1");
 					$('#holic4').text("2");
 					$('#holic5').text("3");
@@ -367,15 +343,6 @@ $(document).ready(function(){
 					$('#holic8').text("6");
 					$('#holic9').text("7");
 				}else if(seq==3){
-					$('#holic1').empty();
-					$('#holic2').empty();
-					$('#holic3').empty();
-					$('#holic4').empty();
-					$('#holic5').empty();
-					$('#holic6').empty();
-					$('#holic7').empty();
-					$('#holic8').empty();
-					$('#holic9').empty();
 					$('#holic2').text("1");
 					$('#holic3').text("2");
 					$('#holic4').text("3");
@@ -385,15 +352,6 @@ $(document).ready(function(){
 					$('#holic8').text("7");
 					$('#holic9').text("8");
 				}else{
-					$('#holic1').empty();
-					$('#holic2').empty();
-					$('#holic3').empty();
-					$('#holic4').empty();
-					$('#holic5').empty();
-					$('#holic6').empty();
-					$('#holic7').empty();
-					$('#holic8').empty();
-					$('#holic9').empty();
 					var text= seq-3;
 					$('#holic1').text(text++);
 					$('#holic2').text(text++);

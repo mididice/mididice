@@ -43,7 +43,7 @@ public class MidiToMp3Controller {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			
-			e.printStackTrace();
+			return "test.mp3";
 		}
 		return midiPath+".mp3";
 	}

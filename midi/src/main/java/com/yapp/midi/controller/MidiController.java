@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.yapp.midi.util.*;
 
@@ -24,6 +26,7 @@ public class MidiController {
 
 	public static String OUTPUT_FILENAME = "yapp1456.mid";
 	public static String FILE_PATH = "";
+	private static final int offset = 25;
 	/*
 	 * 
 	 * iputfile list(max 36), 타악기
@@ -31,12 +34,13 @@ public class MidiController {
 	 * 
 	 * */
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public ModelAndView appendMidiTest(
+	public String appendMidiTest(
 			@RequestParam(value="midis")String[] names, //11.midi
 			@RequestParam(value="seconds")String seconds,
 			@RequestParam(value="bar")String bar,
 			@RequestParam(value="bpm")String bpm,
-			HttpServletRequest request ) throws IOException, InvalidMidiDataException{
+			HttpServletRequest request,
+			RedirectAttributes rediAttr) throws IOException, InvalidMidiDataException{
 		
 		GenerateFileName gfn = new GenerateFileName();
 		MidiToMp3Controller toMp3 = new MidiToMp3Controller();
@@ -66,7 +70,8 @@ public class MidiController {
 		
 		
 		try {
-			mp3Name = toMp3.midiToMp3(resultPath+filename);
+//			mp3Name = toMp3.midiToMp3(resultPath+filename);
+			mp3Name = "test.mp3";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,12 +89,42 @@ public class MidiController {
 		}
 		
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("result");
-		mv.addObject("midiFile", mp3Name);
-		mv.addObject("seconds", seconds);
-		mv.addObject("bar", bar);
-		mv.addObject("bpm", bpm);
-		return mv;
+		RandomString r = new RandomString();
+		RedirectView rediView = new RedirectView();
+		
+		
+		String enc;
+		
+		if(midiName.indexOf('.')==-1){
+			//파일이름이 확장자가 없는경우
+			enc = r.encrypt(midiName, offset);
+		}else{
+			//파일이름이 확장자가 있는경우
+			enc = r.encrypt(midiName.substring(0, midiName.length()-4), offset);
+		}
+		//System.out.println(enc);
+		
+//		mv.addObject("midiFile", mp3Name);
+//		mv.addObject("seconds", seconds);
+//		mv.addObject("bar", bar);
+//		mv.addObject("bpm", bpm);
+		
+		
+		String url = "redirect:/res/"+enc;
+		//rediView.setUrl(url);
+		//rediView.setExposeModelAttributes(false);
+//		rediView.addStaticAttribute(, value);
+		//mv.setView(rediView);
+		
+		rediAttr.addFlashAttribute("midiFile", mp3Name);
+		rediAttr.addFlashAttribute("seconds", seconds);
+		rediAttr.addFlashAttribute("bar", bar);
+		rediAttr.addFlashAttribute("bpm", bpm);
+		
+		System.out.println("midi");
+		
+		return url;
+		
 	}
 	
 }
