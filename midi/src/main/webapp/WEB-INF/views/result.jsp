@@ -230,19 +230,18 @@ width: 1140px;
 						<p class="set_value_result">${seconds}</p>
 					</div>
 					<div class="">
-						<img class="midi_result_img" src="${pageContext.servletContext.contextPath}/resources/images/result1.png">
+						<img class="midi_result_img" src="${pageContext.servletContext.contextPath}/resources/resimg/${resImg}">
 					</div>
 				</div>
 				<div class="midi_res_btn">
 					<div>
 						<a href="javascript:wavesurfer.playPause()"><img src="${pageContext.servletContext.contextPath}/resources/images/play.png"></a>
-						<a id="" href="javascript:;"><img src="${pageContext.servletContext.contextPath}/resources/images/download.png"></a>
+						<a id="down" href="javascript:downMp3();"><img src="${pageContext.servletContext.contextPath}/resources/images/download.png"></a>
 						<a id="facebook-link-btn" href="javascript:sharefb('http://modestpt.esy.es/h');"><img src="${pageContext.servletContext.contextPath}/resources/images/share.png"></a>
 					</div>
 				</div>
 				</div>
 			</div>
-			${midiFile}
 			<div id="waveform">
       <wave style="display: block; position: relative; user-select: none; height: 128px; overflow-x: auto; overflow-y: hidden;"><canvas width="0" height="160" style="position: absolute; z-index: 1; left: 0px; top: 0px; bottom: 0px; width: 0px;"></canvas><wave style="position: absolute; z-index: 2; left: 0px; top: 0px; bottom: 0px; overflow: hidden; width: 0px; display: block; box-sizing: border-box; border-right: 1px solid rgb(255, 255, 255);"><canvas width="0" height="160" style="width: 0px;"></canvas></wave></wave></div>
 		<!-- bottom -->
@@ -342,7 +341,11 @@ width: 1140px;
 					  url: 'https://developers.kakao.com',
 					  text: '아우'
 					});
-						
+				
+					function downMp3(){
+						window.open("../res/download.do?fe=${enc}");
+					}
+					
 			</script>
 	</body>
 </html>

@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.yapp.midi.util.*;
 
@@ -70,8 +68,8 @@ public class MidiController {
 		
 		
 		try {
-//			mp3Name = toMp3.midiToMp3(resultPath+filename);
-			mp3Name = "test.mp3";
+			mp3Name = toMp3.midiToMp3(resultPath+filename);
+//			mp3Name = "test.mp3";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -88,16 +86,8 @@ public class MidiController {
 			System.out.println(imgNames[i]);
 		}
 		
-		ImageMerge i = new ImageMerge();
-		String resImg = i.returndeMergeImage(request, bar, imgNames, filename);
-		System.out.println(resImg);
-		
-		ModelAndView mv = new ModelAndView();
 
 		RandomString r = new RandomString();
-		RedirectView rediView = new RedirectView();
-		
-		
 		String enc;
 		
 		if(midiName.indexOf('.')==-1){
@@ -107,19 +97,12 @@ public class MidiController {
 			//파일이름이 확장자가 있는경우
 			enc = r.encrypt(midiName.substring(0, midiName.length()-4), offset);
 		}
-		//System.out.println(enc);
 		
-//		mv.addObject("midiFile", mp3Name);
-//		mv.addObject("seconds", seconds);
-//		mv.addObject("bar", bar);
-//		mv.addObject("bpm", bpm);
-		
+		//append image 3x3, 4x4, 5x5 
+		ImageMerge i = new ImageMerge();
+		String resImg = i.returndeMergeImage(request, bar, imgNames, enc);
 		
 		String url = "redirect:/res/"+enc;
-		//rediView.setUrl(url);
-		//rediView.setExposeModelAttributes(false);
-//		rediView.addStaticAttribute(, value);
-		//mv.setView(rediView);
 		
 		rediAttr.addFlashAttribute("midiFile", mp3Name);
 		rediAttr.addFlashAttribute("seconds", seconds);

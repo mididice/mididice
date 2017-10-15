@@ -70,6 +70,7 @@ public class FileController {
 		model.addAttribute("filename",filen);
 		String playPath = "../resources/save/";
 		model.addAttribute("p",playPath);
+		model.addAttribute("resImg","res_"+enc+".jpg");
 		return "result"; //결과파일 ==> result file로 변경해야함
 	}
 	
