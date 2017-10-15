@@ -29,7 +29,7 @@ public class MidiController {
 	private static final int offset = 25;
 	/*
 	 * 
-	 * iputfile list(max 36), 타악기
+	 * iputfile list(max 36)
 	 * outfile name
 	 * 
 	 * */
@@ -88,7 +88,12 @@ public class MidiController {
 			System.out.println(imgNames[i]);
 		}
 		
+		ImageMerge i = new ImageMerge();
+		String resImg = i.returndeMergeImage(request, bar, imgNames, filename);
+		System.out.println(resImg);
+		
 		ModelAndView mv = new ModelAndView();
+
 		RandomString r = new RandomString();
 		RedirectView rediView = new RedirectView();
 		
@@ -120,8 +125,7 @@ public class MidiController {
 		rediAttr.addFlashAttribute("seconds", seconds);
 		rediAttr.addFlashAttribute("bar", bar);
 		rediAttr.addFlashAttribute("bpm", bpm);
-		
-		System.out.println("midi");
+		rediAttr.addFlashAttribute("resImg", resImg);
 		
 		return url;
 		
