@@ -152,7 +152,10 @@ height:20em;}
 .selected_bpm{background-color:#311a47;}
 .pattern_img{
 	width: 170px;
+	left: 170px;
+    position: relative;
 }
+
 .set_btn{
 	margin-left:40%;
 	height:110px;
@@ -186,12 +189,38 @@ height:20em;}
   opacity: 1;
 }
 .play_img{
-	width:50px;
+	width:170px;
+	position: relative;
+ 	z-index:-1
 }
+.play_btn_pattern{
+	width: 170px;
+    height: 170px;
+    
+}
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type='text/javascript' src='//www.midijs.net/lib/midi.js'></script>
 <script>
+/* $(document).on("mouseenter",".pattern_img",function() {
+	$(this).next(".play_img").css("z-index","100");
+	
+});
+$(document).on("mouseleave",".pattern_img",function() {
+	$(this).next(".play_img").css("z-index","-1");
+	
+}); */
+$(document).on({
+    mouseenter: function(e){
+    	
+    	$(this).next(".play_img").css("z-index","100");
+    },
+    mouseleave: function(e){
+    	
+    	$(this).next(".play_img").css("z-index","-1");
+    }
+}, '.pattern_img');
 function calc_sec(bar,bpm){
 	if(bar==9){
 		if(bpm==80){
@@ -289,19 +318,21 @@ $(document).ready(function(){
 				
 			},
 			success:function(data){
+				$('.play_img').remove();
 				var obj = JSON.parse(data)
 				
 				for(var i = 0; i<obj.length;i++){
 					$('#seq').val(obj[i].sequence);
-					/* $('#dice1').text(obj[i].pupleDice);
-					$('#dice2').text(obj[i].pinkDice);
-					$('#path').text(obj[i].midiPath); */
 					$('#midiNames').append("<input type='hidden' name='midis' value='"+obj[i].midiPath+"'>");
 					$('#sequenceNumber').text(obj[i].sequence+"/"+bar);
-					/* $('#patterns').append(obj[i].pattern); */
-					$('#patterns').append("<a href='#' onClick='MIDIjs.play(\"${pageContext.servletContext.contextPath}/resources/midi/"+obj[i].midiPath+"\");'>"
+					
+					
+					/* $('#patterns').append("<div class='play_btn_pattern'><img src='${pageContext.servletContext.contextPath}/resources/images/patterns/"
+							+obj[i].pattern+"' class='pattern_img' id='pattern"+seq+"'></div>"); */
+					$('#patterns').append("<a href='#' id='samdasu' onClick='MIDIjs.play(\"${pageContext.servletContext.contextPath}/resources/midi/"+obj[i].midiPath+"\");'>"
 						+"<img src='${pageContext.servletContext.contextPath}/resources/images/patterns/"
-						+obj[i].pattern+"' class='pattern_img' id='pattern"+seq+"'>");
+						+obj[i].pattern+"' class='pattern_img' id='pattern"+seq+"'>"
+						+"<img src='${pageContext.servletContext.contextPath}/resources/images/play_midi.png' class='play_img'>");
 					/*
 					"<div class='play-button-icon'>"+
 					"<img class='play_img' src='http://wptf.com/wp-content/uploads/2014/05/play-button.png'></div>")
