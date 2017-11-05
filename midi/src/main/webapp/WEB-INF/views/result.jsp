@@ -233,13 +233,18 @@ width: 1140px;
 						<img class="midi_result_img" src="${pageContext.servletContext.contextPath}/resources/resimg/${resImg}">
 					</div>
 				</div>
+				
 				<div class="midi_res_btn">
 					<div>
 						<a href="javascript:wavesurfer.playPause()"><img src="${pageContext.servletContext.contextPath}/resources/images/play.png"></a>
 						<a id="down" href="javascript:downMp3();"><img src="${pageContext.servletContext.contextPath}/resources/images/download.png"></a>
-						<a id="facebook-link-btn" href="javascript:sharefb('http://modestpt.esy.es/h');"><img src="${pageContext.servletContext.contextPath}/resources/images/share.png"></a>
+						<a href="javascript:shareYtb();"><img src="${pageContext.servletContext.contextPath}/resources/images/share.png"></a>
 					</div>
 				</div>
+				<form action="" name="merge" method="post">
+					<input type="hidden" name="i" value="${resImg}">
+					<input type="hidden" name="m" value="${filename}">
+				</form>
 				</div>
 			</div>
 			<div id="waveform">
@@ -257,11 +262,23 @@ width: 1140px;
 		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 		<!--<script src="assets/js/main.js"></script>-->
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.6/wavesurfer.min.js"></script>
-		<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 		<script>
+			/*
+			 유투부를 통한 페이스북 공유
 			function sharefb(url){
 	            window.open("http://www.facebook.com/sharer/sharer.php?u="+url)
 	         }
+			
+			*/
+			
+			//유투브 업로드를 위한 파일 병합
+			function shareYtb(){
+				var open = window.open("","loading","resizable=no, width=500, height=400");
+				var f = document.merge;
+				f.action = "convert";
+				f.target = "loading";
+				f.submit();
+			}
 			
 			var _showPage = function(){ 
 				var loader = $("div.loader"); 
@@ -277,6 +294,7 @@ width: 1140px;
 				cursorColor: '#fff'
 			});
 			wavesurfer.load('/midi/resources/save/${filename}.mp3');
+			//wavesurfer.load('/midi/resources/save/iu.mp3');
 			wavesurfer.on('ready',function(){
 				_showPage();
 				$("wave:first-child").css('height','25px');
