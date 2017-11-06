@@ -152,10 +152,7 @@ height:20em;}
 .selected_bpm{background-color:#311a47;}
 .pattern_img{
 	width: 170px;
-	left: 170px;
-    position: relative;
 }
-
 .set_btn{
 	margin-left:40%;
 	height:110px;
@@ -176,6 +173,10 @@ height:20em;}
 	overflow-x: hidden;
 	overflow-y: hidden;
 }
+#samdasu {
+	display: inline-block;
+}
+
 #patterns{
 	float:right;
 }
@@ -189,38 +190,49 @@ height:20em;}
   opacity: 1;
 }
 .play_img{
-	width:170px;
-	position: relative;
- 	z-index:-1
+	
+ 	/* visibility: hidden; */
 }
 .play_btn_pattern{
 	width: 170px;
     height: 170px;
     
 }
+.another_love{
+	width:170px;
+	display: inline-block;
+}
 
+/*responsive media css*/
+@media (max-width: 1920px) {
+
+}
+@media (max-width: 1350px) {
+
+}
+@media (max-width: 1024px) {
+
+}
+@media (max-width: 860px) {
+/* modal */
+.modal{ width: 100%;}
+.modal-content{ height: 90%;}
+.modal-content>p{    text-align: center;}
+.set_div{padding:0; height:25%; width:100%;}
+.set_title{ font-size:14px; height:20px;}
+.set_title_time{font-size: 14px; height:20px;}
+
+.bar,.bpm{margin-left:11%;}
+.set_btn{margin:0 auto;}
+.start_btn>img{width:100%;}
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type='text/javascript' src='//www.midijs.net/lib/midi.js'></script>
 <script>
-/* $(document).on("mouseenter",".pattern_img",function() {
-	$(this).next(".play_img").css("z-index","100");
-	
+$('#samdasu').hover(function(){
+	$(this).find('.play_img').css('visibility', 'visible');
 });
-$(document).on("mouseleave",".pattern_img",function() {
-	$(this).next(".play_img").css("z-index","-1");
-	
-}); */
-$(document).on({
-    mouseenter: function(e){
-    	
-    	$(this).next(".play_img").css("z-index","100");
-    },
-    mouseleave: function(e){
-    	
-    	$(this).next(".play_img").css("z-index","-1");
-    }
-}, '.pattern_img');
 function calc_sec(bar,bpm){
 	if(bar==9){
 		if(bpm==80){
@@ -252,6 +264,81 @@ function calc_sec(bar,bpm){
 $(document).on("click","#result",function() {
 	$('#doResult').submit();
 });
+
+function animateDice(purpleDice, pinkDice) {
+    var i = 0;
+    var timer = setInterval(function(){
+    	if(i<10){
+    		$('.midi_dice_right').children().first().attr('src', '${pageContext.servletContext.contextPath}/resources/images/dice/VioletDice01_0000'+i+'.png');	
+    		$('.midi_dice_left').children().first().attr('src', '${pageContext.servletContext.contextPath}/resources/images/dice/PinkDice01_0000'+i+'.png');
+    	}else if(i<60){
+        	$('.midi_dice_right').children().first().attr('src', '${pageContext.servletContext.contextPath}/resources/images/dice/VioletDice01_000'+i+'.png');            
+        	$('.midi_dice_left').children().first().attr('src', '${pageContext.servletContext.contextPath}/resources/images/dice/PinkDice01_000'+i+'.png');            
+        }else{
+        	$('.midi_dice_right').children().first().attr('src', '${pageContext.servletContext.contextPath}/resources/images/dice/VioletDice0'+purpleDice+'.png');
+        	$('.midi_dice_left').children().first().attr('src', '${pageContext.servletContext.contextPath}/resources/images/dice/PinkDice0'+pinkDice+'.png');
+        	clearInterval(timer);
+        	return;
+        }
+        i++;
+    }, 33)
+};
+var callback = function(midipath, pattern, seq){
+	$('#patterns').append("<div class='another_love'><a href='#' id='samdasu' onClick='MIDIjs.play(\"${pageContext.servletContext.contextPath}/resources/midi/"+midipath+"\");'>"
+			+"<img src='${pageContext.servletContext.contextPath}/resources/images/patterns/"
+			+pattern+"' class='pattern_img' id='pattern"+seq+"'>");
+		
+		if(seq==0){
+			$('#holic5').text("1");
+			$('#holic6').text("2");
+			$('#holic7').text("3");
+			$('#holic8').text("4");
+			$('#holic9').text("5");
+		}else if(seq==1){
+			
+			$('#holic4').text("1");
+			$('#holic5').text("2");
+			$('#holic6').text("3");
+			$('#holic7').text("4");
+			$('#holic8').text("5");
+			$('#holic9').text("6");
+		}else if(seq==2){
+			$('#holic3').text("1");
+			$('#holic4').text("2");
+			$('#holic5').text("3");
+			$('#holic6').text("4");
+			$('#holic7').text("5");
+			$('#holic8').text("6");
+			$('#holic9').text("7");
+		}else if(seq==3){
+			$('#holic2').text("1");
+			$('#holic3').text("2");
+			$('#holic4').text("3");
+			$('#holic5').text("4");
+			$('#holic6').text("5");
+			$('#holic7').text("6");
+			$('#holic8').text("7");
+			$('#holic9').text("8");
+		}else{
+			var text= seq-3;
+			$('#holic1').text(text++);
+			$('#holic2').text(text++);
+			$('#holic3').text(text++);
+			$('#holic4').text(text++);
+			$('#holic5').text(text++);
+			$('#holic6').text(text++);
+			$('#holic7').text(text++);
+			$('#holic8').text(text++);
+			$('#holic9').text(text++);
+		}
+		
+		var targetDiv = $('#patterns div')
+		if ($(targetDiv).length >= 6) {
+			targetDiv.eq(0).remove()
+		}
+}
+var aa = "<img src='${pageContext.servletContext.contextPath}/resources/images/play_midi.png' class='play_img'></div>";
+
 $(document).ready(function(){
 	var bar = 9;
 	var bpm = 80;
@@ -318,30 +405,30 @@ $(document).ready(function(){
 				
 			},
 			success:function(data){
-				$('.play_img').remove();
+				
 				var obj = JSON.parse(data)
 				
 				for(var i = 0; i<obj.length;i++){
+					var purpleDice = obj[i].pupleDice;
+					var pinkDice = obj[i].pinkDice;
+					animateDice(purpleDice, pinkDice);
+					var samdasu = obj[i];
 					$('#seq').val(obj[i].sequence);
 					$('#midiNames').append("<input type='hidden' name='midis' value='"+obj[i].midiPath+"'>");
 					$('#sequenceNumber').text(obj[i].sequence+"/"+bar);
 					
-					
 					/* $('#patterns').append("<div class='play_btn_pattern'><img src='${pageContext.servletContext.contextPath}/resources/images/patterns/"
 							+obj[i].pattern+"' class='pattern_img' id='pattern"+seq+"'></div>"); */
-					$('#patterns').append("<a href='#' id='samdasu' onClick='MIDIjs.play(\"${pageContext.servletContext.contextPath}/resources/midi/"+obj[i].midiPath+"\");'>"
-						+"<img src='${pageContext.servletContext.contextPath}/resources/images/patterns/"
-						+obj[i].pattern+"' class='pattern_img' id='pattern"+seq+"'>"
-						+"<img src='${pageContext.servletContext.contextPath}/resources/images/play_midi.png' class='play_img'>");
 					/*
 					"<div class='play-button-icon'>"+
 					"<img class='play_img' src='http://wptf.com/wp-content/uploads/2014/05/play-button.png'></div>")
 					+obj[i].midiPath+
 					*/
-					var targetImg = $('#patterns img')
-					if ($(targetImg).length >= 6) {
-						targetImg.eq(0).remove()
-					}
+					var midipath = obj[i].midiPath;
+					var pattern = obj[i].pattern;
+					
+					window.setTimeout(callback,2000,midipath,pattern,seq);
+					
 					if(seq==bar-1){
 						$('.roll_dice_bottom').empty();
 						$('.roll_dice_bottom').append("<span class='roll_btn' id='result'><img src='${pageContext.servletContext.contextPath}/resources/images/result.png'></span>");
@@ -350,50 +437,7 @@ $(document).ready(function(){
 					$('#seqBar').width(graph+"%");
 				}
 				
-				
-				if(seq==0){
-					$('#holic5').text("1");
-					$('#holic6').text("2");
-					$('#holic7').text("3");
-					$('#holic8').text("4");
-					$('#holic9').text("5");
-				}else if(seq==1){
-					
-					$('#holic4').text("1");
-					$('#holic5').text("2");
-					$('#holic6').text("3");
-					$('#holic7').text("4");
-					$('#holic8').text("5");
-					$('#holic9').text("6");
-				}else if(seq==2){
-					$('#holic3').text("1");
-					$('#holic4').text("2");
-					$('#holic5').text("3");
-					$('#holic6').text("4");
-					$('#holic7').text("5");
-					$('#holic8').text("6");
-					$('#holic9').text("7");
-				}else if(seq==3){
-					$('#holic2').text("1");
-					$('#holic3').text("2");
-					$('#holic4').text("3");
-					$('#holic5').text("4");
-					$('#holic6').text("5");
-					$('#holic7').text("6");
-					$('#holic8').text("7");
-					$('#holic9').text("8");
-				}else{
-					var text= seq-3;
-					$('#holic1').text(text++);
-					$('#holic2').text(text++);
-					$('#holic3').text(text++);
-					$('#holic4').text(text++);
-					$('#holic5').text(text++);
-					$('#holic6').text(text++);
-					$('#holic7').text(text++);
-					$('#holic8').text(text++);
-					$('#holic9').text(text++);
-				}
+			
 			},
 			error: function(){
 				console.log('error:')
