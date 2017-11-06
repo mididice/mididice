@@ -233,13 +233,18 @@ width: 1140px;
 						<img class="midi_result_img" src="${pageContext.servletContext.contextPath}/resources/resimg/${resImg}">
 					</div>
 				</div>
+				
 				<div class="midi_res_btn">
 					<div>
 						<a href="javascript:wavesurfer.playPause()"><img src="${pageContext.servletContext.contextPath}/resources/images/play.png"></a>
 						<a id="down" href="javascript:downMp3();"><img src="${pageContext.servletContext.contextPath}/resources/images/download.png"></a>
-						<a id="facebook-link-btn" href="javascript:sharefb('http://modestpt.esy.es/h');"><img src="${pageContext.servletContext.contextPath}/resources/images/share.png"></a>
+						<a href="javascript:shareYtb();"><img src="${pageContext.servletContext.contextPath}/resources/images/share.png"></a>
 					</div>
 				</div>
+				<form action="" name="merge" method="post">
+					<input type="hidden" name="i" value="${resImg}">
+					<input type="hidden" name="m" value="${filename}">
+				</form>
 				</div>
 			</div>
 			<div id="waveform">
@@ -251,101 +256,81 @@ width: 1140px;
 	</section>
 	<!-- Scripts -->
 			
-			<!--<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>-->
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<!--<script src="assets/js/main.js"></script>-->
-			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.6/wavesurfer.min.js"></script>
-			<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-			<script>
-				function sharefb(url){
-		            window.open("http://www.facebook.com/sharer/sharer.php?u="+url)
-		         }
+		<!--<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/skel.min.js"></script>
+		<script src="assets/js/util.js"></script>-->
+		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+		<!--<script src="assets/js/main.js"></script>-->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.6/wavesurfer.min.js"></script>
+		<script>
+			/*
+			 유투부를 통한 페이스북 공유
+			function sharefb(url){
+	            window.open("http://www.facebook.com/sharer/sharer.php?u="+url)
+	         }
 			
-				var _showPage = function(){ 
-					var loader = $("div.loader"); 
-					loader.css("display","none");
-					$("#play_btn, #share_btn, #down_btn").css('cursor','default');
-					$("#play_btn, #share_btn, #down_btn").attr('disabled',false);
-				};
+			*/
+			
+			//유투브 업로드를 위한 파일 병합
+			function shareYtb(){
+				var open = window.open("","loading","resizable=no, width=500, height=400");
+				var f = document.merge;
+				f.action = "convert";
+				f.target = "loading";
+				f.submit();
+			}
+			
+			var _showPage = function(){ 
+				var loader = $("div.loader"); 
+				loader.css("display","none");
+				$("#play_btn, #share_btn, #down_btn").css('cursor','default');
+				$("#play_btn, #share_btn, #down_btn").attr('disabled',false);
+			};
 
-				var wavesurfer = WaveSurfer.create({
-					container: '#waveform',
-					waveColor: 'rgba(211, 211, 211, 0.48)',
-					progressColor: 'rgba(255, 51, 126, 0.59)',
-					cursorColor: '#fff'
-				});
-				wavesurfer.load('/midi/resources/save/iu.mp3');
-				wavesurfer.on('ready',function(){
-					_showPage();
-					$("wave:first-child").css('height','25px');
-				});
-				
-				wavesurfer.on('error',function(){
-					alert("파일이 존재하지 않습니다^^ 올바른경로로 접속하였는지 다시한번 확인해주세요~");
-					// ==> 추가이벤트 입력(리다이렉트, 창을 종료?, 버튼 비활성화 등등)
-				});
+			var wavesurfer = WaveSurfer.create({
+				container: '#waveform',
+				waveColor: 'rgba(211, 211, 211, 0.48)',
+				progressColor: 'rgba(255, 51, 126, 0.59)',
+				cursorColor: '#fff'
+			});
+			wavesurfer.load('/midi/resources/save/${filename}.mp3');
+			//wavesurfer.load('/midi/resources/save/iu.mp3');
+			wavesurfer.on('ready',function(){
+				_showPage();
+				$("wave:first-child").css('height','25px');
+			});
 			
-				$(function(){
-					$("wave:first-child").css('height','25px');
-					$("#play_btn, #share_btn, #down_btn").css('cursor','not-allowed');
-					$("#play_btn, #share_btn, #down_btn").attr('disabled',true);
-					var filter = "win16|win32|win64|mac";
-					/*if(navigator.platform){ //loading event
-						if(0 > filter.indexOf(navigator.platform.toLowerCase())){
-							//모바일일 경우
-							setTimeout(_showPage,20000);
-						}else{
-							//PC화면일 경우
-							setTimeout(_showPage,3500);
-						}
-					}*/
-					
-					$(window).resize(function(){
-						wavesurfer.zoom(1);
-					});
-					
-					$("#play_btn").click(function(){
-						wavesurfer.playPause();
-					});
-					
-					$("#down_btn").click(function(){
-						location.href="/midi/resources/save/iu.mp3";
-					});
-					
-					$("#share_btn").click(function(){
-						alert("준비중입니다 ^_^ ==> facebook, soundcloud, instagram, naver blog, kakaotalk, kakaostory, 트위터, 음악공유 sns 등");
-					});
-				});
-				
-				//<![CDATA[
-		          Kakao.init('bba6ccd8e367fee148055faeb22bdbca');
-		          Kakao.Link.createTalkLinkButton({
-		            container: '#kakao-link-btn',
-		            label: '카카오톡^^',
-		            image: {
-		              src: "http://dn.api1.kage.kakao.co.kr/14/dn/btqa9B90G1b/GESkkYjKCwJdYOkLvIBKZ0/o.jpg",
-		              width: '300',
-		              height: '200'
-		            },
-		            webButton: {
-		              text: '일루왕~',
-		              url: 'http://modestpt.esy.es/h'
-		            }
-		          });
-				  //]]>
-					// 스토리 공유 버튼을 생성합니다.
-					Kakao.Story.createShareButton({
-					  container: '#kakaostory-share-button',
-					  url: 'https://developers.kakao.com',
-					  text: '아우'
-					});
-				
-					function downMp3(){
-						window.open("../res/download.do?fe=${enc}");
+			wavesurfer.on('error',function(){
+				alert("파일이 존재하지 않습니다^^ 올바른경로로 접속하였는지 다시한번 확인해주세요~");
+				// ==> 추가이벤트 입력(리다이렉트, 창을 종료?, 버튼 비활성화 등등)
+			});
+		
+			$(function(){
+				$("wave:first-child").css('height','25px');
+				$("#play_btn, #share_btn, #down_btn").css('cursor','not-allowed');
+				$("#play_btn, #share_btn, #down_btn").attr('disabled',true);
+				var filter = "win16|win32|win64|mac";
+				/*if(navigator.platform){ //loading event
+					if(0 > filter.indexOf(navigator.platform.toLowerCase())){
+						//모바일일 경우
+						setTimeout(_showPage,20000);
+					}else{
+						//PC화면일 경우
+						setTimeout(_showPage,3500);
 					}
-					
-			</script>
+				}*/
+				
+				$(window).resize(function(){
+					wavesurfer.zoom(1);
+				});
+
+			});
+			
+		//파일 다운로드
+		function downMp3(){
+			window.open("../res/download.do?fe=${enc}");
+		}
+		
+		</script>
 	</body>
 </html>
