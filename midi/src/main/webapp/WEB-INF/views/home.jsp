@@ -54,19 +54,20 @@ background-size: 40px 15px;}
 }
 .play_condi_title{    font-size: 1.0em;}
 .play_condi_result{    font-size: 1.8em;}
-.initial_set{ width: 210px; background-color:black;     height: 380px; margin-top: 120px; border-radius: 20px;}
-.midi_dice_center{ display: inline-block;  width:48%;  margin-top: 7em; }
-.midi_dice_left{ height: 20em; border-radius: 50%;
-    width: 330px; display: inline-block; 
+
+.midi_dice_center{ display: inline-block;  width:48%;  margin-top: 8%; margin-right:2%; }
+.midi_dice_left{  border-radius: 50%;
+    width: 48%; display: inline-block; margin-right: 3%;
 }
-.midi_dice_right{ height:20em; border-radius: 50%;
-    width: 330px; background-position: center center;
+.midi_dice_right{  border-radius: 50%;
+    width: 48%; background-position: center center;
     background-size: cover;     display: inline-block;}
-.midi_dice_left img{ width: 345px;}
-.midi_dice_right img{ width: 345px;}
+.midi_dice_left img{ width: 100%;}
+.midi_dice_right img{ width: 100%;}
+.sk_nights_first{ margin-top:2em; }
+.sk_nights{margin-top:1em;}
 /*background: linear-gradient( to right, #69349c, #d17cac );*/
-.midi_current_right{ display: inline-block; width:240px; margin-top: 7em;
-height:20em;}
+.midi_current_right{ display: inline-block; width:18%; margin-top: 8%;}
 .midi_result{ margin-top:40px; }
 .sequence_number{ font-size:3em; color:white;     text-align: center;    margin-bottom: 0.5em;}
 .sequence_bar{width: 100%;
@@ -79,6 +80,7 @@ height:20em;}
     border-radius:6px;}
 .roll_dice_bottom{margin-top: 85px;}
 .roll_btn{ cursor:pointer;}
+.roll_btn > img{ width:100%;}
 /* The Modal (background) */
 .modal {
     display: block; /* Hidden by default */
@@ -100,7 +102,7 @@ height:20em;}
     padding: 30px;
     border:0;
     border-radius:10px;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 1250px; /* Could be more or less, depending on screen size */
 }
 .bpm{ display: inline-block;
     height: 40px;
@@ -140,8 +142,8 @@ height:20em;}
 }
 .set_div{
 	width: 33%;
-	height: 360px;
-	padding: 100px 50px 100px 50px;
+	height: 20%;
+	padding: 5%;
 	display:inline-block;
 }
 .set_time{
@@ -155,13 +157,13 @@ height:20em;}
 }
 .set_btn{
 	margin-left:40%;
+	margin-top:8%;
 	height:110px;
 }
 .start_btn{ cursor:pointer;}
 
-.holic_num{ width: 170px;
+.holic_num{ width: 11%;
     padding-left: 84px;
-    padding-right: 84px;
     margin: 0; float:left; height:inherit; color:#311a47; font-size:20px; font-weight:bold;}
 .progressNumber{
 	height:30px;
@@ -172,9 +174,6 @@ height:20em;}
 	height:170px;
 	overflow-x: hidden;
 	overflow-y: hidden;
-}
-#samdasu {
-	display: inline-block;
 }
 
 #patterns{
@@ -216,23 +215,51 @@ height:20em;}
 @media (max-width: 860px) {
 /* modal */
 .modal{ width: 100%;}
-.modal-content{ height: 90%;}
+.modal-content{ height: 90%; width:80%;}
 .modal-content>p{    text-align: center;}
-.set_div{padding:0; height:25%; width:100%;}
+.set_div{padding:0; height:25%; width:100%; text-align: center;}
 .set_title{ font-size:14px; height:20px;}
 .set_title_time{font-size: 14px; height:20px;}
 
 .bar,.bpm{margin-left:11%;}
 .set_btn{margin:0 auto;}
 .start_btn>img{width:100%;}
+
+/*content*/
+.container{height:100%;}
+.midi_content{display:block;}
+.midi_setting_left{ width: 100%; margin:0; height:110px; padding: 20px 1px;}
+.midi_dice_center{margin:0; width:100%;}
+.sk_nights_first{ margin:0; padding:0; display:inline-block;}
+.sk_nights{margin:0; padding:0; display:inline-block;}
+.midi_dice_right{ display:none;}
+.midi_current_right{width:100%;margin:0;height:10%;}
+.midi_dice_left{ width:100%; height:10%; text-align: center; margin:20px 0 15px 0;}
+.midi_dice_left >img{ width: 70%; }
+.roll_dice_bottom{margin-top:5%;}
+.midi_result{ display:none;}
+#waveform_set{width:100%; height:120px}
+.pattern_img{width:100%;}
+.another_love{ width: 33%;}
+
+#holic1{ display:none;}
+#holic2{ display:none;}
+#holic3{ display:none;}
+#holic7{ display:none;}
+#holic8{ display:none;}
+#holic9{ display:none;}
 }
+
+/*result*/
+.container{ height: 100%; }
+.midi_result_img{width:100%;}
+.midi_res_img{ width: 100%}
+#waveform{ display:none;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type='text/javascript' src='//www.midijs.net/lib/midi.js'></script>
 <script>
-$('#samdasu').hover(function(){
-	$(this).find('.play_img').css('visibility', 'visible');
-});
+const mq = window.matchMedia( "(max-width: 860px)" );
 function calc_sec(bar,bpm){
 	if(bar==9){
 		if(bpm==80){
@@ -264,7 +291,14 @@ function calc_sec(bar,bpm){
 $(document).on("click","#result",function() {
 	$('#doResult').submit();
 });
-
+var imgSrc;
+$(document).on("mouseenter",".another_love",function(){
+	imgSrc = $(this).children().find('.pattern_img').attr("src");
+	$(this).children().find('.pattern_img').attr('src', '${pageContext.servletContext.contextPath}/resources/images/play_midi.png');
+});
+$(document).on("mouseleave",".another_love",function(){
+	$(this).children().find('.pattern_img').attr('src', imgSrc);
+});
 function animateDice(purpleDice, pinkDice) {
     var i = 0;
     var timer = setInterval(function(){
@@ -331,14 +365,17 @@ var callback = function(midipath, pattern, seq){
 			$('#holic8').text(text++);
 			$('#holic9').text(text++);
 		}
-		
 		var targetDiv = $('#patterns div')
-		if ($(targetDiv).length >= 6) {
-			targetDiv.eq(0).remove()
+		if(mq.matches){
+			if ($(targetDiv).length >= 3) {
+				targetDiv.eq(0).remove()
+			}
+		}else{
+			if ($(targetDiv).length >= 6) {
+				targetDiv.eq(0).remove()
+			}
 		}
 }
-var aa = "<img src='${pageContext.servletContext.contextPath}/resources/images/play_midi.png' class='play_img'></div>";
-
 $(document).ready(function(){
 	var bar = 9;
 	var bpm = 80;
@@ -387,7 +424,7 @@ $(document).ready(function(){
 		$('#myModal').css('display','none');
 	});
 	
-	$('#roll').click(function(){
+	var clickRoll = function(){
 		var seq = $('#seq').val();
 		var per = 100/bar;
 		
@@ -417,13 +454,6 @@ $(document).ready(function(){
 					$('#midiNames').append("<input type='hidden' name='midis' value='"+obj[i].midiPath+"'>");
 					$('#sequenceNumber').text(obj[i].sequence+"/"+bar);
 					
-					/* $('#patterns').append("<div class='play_btn_pattern'><img src='${pageContext.servletContext.contextPath}/resources/images/patterns/"
-							+obj[i].pattern+"' class='pattern_img' id='pattern"+seq+"'></div>"); */
-					/*
-					"<div class='play-button-icon'>"+
-					"<img class='play_img' src='http://wptf.com/wp-content/uploads/2014/05/play-button.png'></div>")
-					+obj[i].midiPath+
-					*/
 					var midipath = obj[i].midiPath;
 					var pattern = obj[i].pattern;
 					
@@ -432,6 +462,7 @@ $(document).ready(function(){
 					if(seq==bar-1){
 						$('.roll_dice_bottom').empty();
 						$('.roll_dice_bottom').append("<span class='roll_btn' id='result'><img src='${pageContext.servletContext.contextPath}/resources/images/result.png'></span>");
+						$('.midi_dice_left').attr("id","result");
 					}
 					graph=graph+per;
 					$('#seqBar').width(graph+"%");
@@ -446,10 +477,13 @@ $(document).ready(function(){
 		}else{
 			
 		}
-	});	
-});
-</script>
+	};
 
+	
+	$('.midi_dice_left').click(clickRoll);
+	$('#roll').click(clickRoll)
+;});
+</script>
 </head>
 <body>
 <!-- header -->
@@ -493,19 +527,19 @@ $(document).ready(function(){
 		</div>
 			<div class="midi_content">
 				<div class="midi_setting_left">
-					<div style="margin-bottom: 1.4em;padding-top:2.5em; ">
+					<div class="sk_nights_first">
 						<div>
 							<p class="play_condi_title">second</p>
 							<p class="play_condi_result" id="second"></p>
 						</div>
 					</div>
-					<div style="margin-bottom: 1.4em;">
+					<div class="sk_nights">
 						<div>
 							<p class="play_condi_title">BAR</p>
 							<p class="play_condi_result" id="bar"></p>
 						</div>
 					</div>
-					<div style=" margin-bottom: 1.4em;">
+					<div class="sk_nights">
 						<div>
 							<p class="play_condi_title">BPM</p>
 							<p class="play_condi_result" id="bpm"></p>
@@ -513,7 +547,7 @@ $(document).ready(function(){
 					</div>
 				</div>
 				<div class="midi_dice_center">
-					<div class="midi_dice_left" style="margin-right: 20px;">
+					<div class="midi_dice_left">
 						<img src="${pageContext.servletContext.contextPath}/resources/images/midipink2.png">
 					</div>
 					<div class="midi_dice_right">

@@ -46,22 +46,22 @@ background-size: 40px 15px;}
 .midi_content{ padding-top: 20px; background-color:#311a47; display:flex;}
 .midi_setting_left{ display: inline-block;background-color:#69349c; width:12%; padding: 0 65px;
     height: 20em;
-    margin: 7em;
+    margin: 8%;
     color: #ffffff; text-align:center;
     border-radius: 15px;
 }
 .play_condi_title{    font-size: 1.0em;}
 .play_condi_result{    font-size: 1.8em;}
 .initial_set{ width: 210px; background-color:black;     height: 380px; margin-top: 120px; border-radius: 20px;}
-.midi_dice_center{ display: inline-block;  width:48%;  margin-top: 7em; }
+.midi_dice_center{ display: inline-block;  width:48%;  margin-top: 8%; }
 .midi_dice_left{ height: 20em; border-radius: 50%;
-    width: 330px; display: inline-block; 
+    width: 340px; display: inline-block; 
 }
 .midi_dice_right{ height:20em; border-radius: 50%;
-    width: 330px; background-position: center center;
+    width: 340px; background-position: center center;
     background-size: cover;     display: inline-block;}
-.midi_dice_left img{ width: 345px;}
-.midi_dice_right img{ width: 345px;}
+.midi_dice_left img{ width: 100%;}
+.midi_dice_right img{ width: 100%;}
 /*background: linear-gradient( to right, #69349c, #d17cac );*/
 .midi_current_right{ display: inline-block; width:240px; margin-top: 7em;
 height:20em;}
@@ -200,6 +200,18 @@ width: 1140px;
     padding-left: 15px;
     height:570px;}
 .midi_result_img{ width:64%}
+
+@media (max-width: 860px) {
+/*result*/
+.container{ height: 100%; }
+.result_content{ width: 100%; height: 100%}
+.set_result{ height: 100%; padding: 20px;}
+.midi_result_img{width:100%;}
+.midi_res_img{ width: 100%; text-align:center;}
+.midi_res_btn{ padding: 1%; height: 160px; width:100%;}
+.midi_res_btn_center{ text-align:center;}
+#waveform{ display:none;}
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
@@ -235,7 +247,7 @@ width: 1140px;
 				</div>
 				
 				<div class="midi_res_btn">
-					<div>
+					<div class="midi_res_btn_center">
 						<a href="javascript:wavesurfer.playPause()"><img src="${pageContext.servletContext.contextPath}/resources/images/play.png"></a>
 						<a id="down" href="javascript:downMp3();"><img src="${pageContext.servletContext.contextPath}/resources/images/download.png"></a>
 						<a href="javascript:shareYtb();"><img src="${pageContext.servletContext.contextPath}/resources/images/share.png"></a>
