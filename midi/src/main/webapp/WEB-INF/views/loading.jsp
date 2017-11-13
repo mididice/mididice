@@ -35,9 +35,46 @@
 </head>
 <body>
 <div class="grad">
-<img src="${pageContext.servletContext.contextPath}/resources/images/801.gif" style="padding-top:10em;">
+	<div>
+		<img id="youtUpload" src="${pageContext.servletContext.contextPath}/resources/images/youtube_uploading.gif"  style="padding-top:10em; display:none;">
+	</div>
+	<div>
+		<img id="i" src="${pageContext.servletContext.contextPath}/resources/images/801.gif" style="padding-top:10em;">
+	</div>
 </div>
 <script>
+function process(){
+	$("#i").css("display","none");
+	$("#youtUpload").fadeIn(2000);
+}
+
+
+function uploading(){
+	$.ajax({
+		type : 'post',
+		url : '/midi/upload.do',
+		data : {
+			'v' : "${mus}"			
+		},
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			if(data.code == 0){
+				//alert('업로드 완료');
+				location.href="youtbs?id="+data.id;
+			}else{
+				alert("에러가 발생하였습니다.");
+				window.close();	
+			}
+		},
+		error : function(request,status,error){
+			console.log("code:"+request.status);
+			console.log("message:"+request.responseText);
+			console.log("error:"+error);
+		}	
+	});
+}
+
 $(function(){
 	$.ajax({
 		type : 'post',
@@ -50,12 +87,11 @@ $(function(){
 		success : function(data){
 			console.log(data);
 			if(data.code == 0){
-				alert('파일 변환 완료');
-				//결과페이지 유투브 업로드 완료
-				//location.href="t2?ytbID="+data.id;
+				process();
+				uploading(); //유투브 업로드 진행
 			}else{
 				alert("에러가 발생하였습니다.");
-				//window.close();	
+				window.close();	
 			}
 		},
 		error : function(){
@@ -63,7 +99,6 @@ $(function(){
 		}	
 	});
 })
-
 </script>
 </body>
 </html>
