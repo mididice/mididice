@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>midiYAPP</title>
+<title>midiDICE</title>
 <style>
 html {
   font-family: sans-serif;
@@ -200,6 +200,13 @@ width: 1140px;
     padding-left: 15px;
     height:570px;}
 .midi_result_img{ width:64%}
+
+.play_m:hover, .down_m:hover, .share_m:hover{
+	transform:scale(1.1);             /*  default */
+	-webkit-transform:scale(1.1);  /*  chrome */
+	-moz-transform:scale(1.1);     /* FireFox */
+	-o-transform:scale(1.1);        /* Opera */
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
@@ -236,9 +243,9 @@ width: 1140px;
 				
 				<div class="midi_res_btn">
 					<div>
-						<a href="javascript:wavesurfer.playPause()"><img src="${pageContext.servletContext.contextPath}/resources/images/play.png"></a>
-						<a id="down" href="javascript:downMp3();"><img src="${pageContext.servletContext.contextPath}/resources/images/download.png"></a>
-						<a href="javascript:shareYtb();"><img src="${pageContext.servletContext.contextPath}/resources/images/share.png"></a>
+						<a href="javascript:wavesurfer.playPause()"><img src="${pageContext.servletContext.contextPath}/resources/images/play.png" class="play_m"></a>
+						<a id="down" href="javascript:downMp3();"><img src="${pageContext.servletContext.contextPath}/resources/images/download.png" class="down_m"></a>
+						<a href="javascript:shareYtb();"><img src="${pageContext.servletContext.contextPath}/resources/images/share.png" class="share_m"></a>
 					</div>
 				</div>
 				<form action="" name="merge" method="post">
@@ -263,21 +270,21 @@ width: 1140px;
 		<!--<script src="assets/js/main.js"></script>-->
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.6/wavesurfer.min.js"></script>
 		<script>
-			/*
-			 유투부를 통한 페이스북 공유
-			function sharefb(url){
-	            window.open("http://www.facebook.com/sharer/sharer.php?u="+url)
-	         }
-			
-			*/
+		
+			//파일 공유 클릭 여부
+			var c = 0;
 			
 			//유투브 업로드를 위한 파일 병합
 			function shareYtb(){
+				if(c == 1){
+					alert("파일 변환 및 업로드를 진행하였습니다.");
+				}
 				var open = window.open("","loading","resizable=no, width=500, height=400");
 				var f = document.merge;
 				f.action = "convert";
 				f.target = "loading";
 				f.submit();
+				c = 1;
 			}
 			
 			var _showPage = function(){ 
@@ -286,7 +293,7 @@ width: 1140px;
 				$("#play_btn, #share_btn, #down_btn").css('cursor','default');
 				$("#play_btn, #share_btn, #down_btn").attr('disabled',false);
 			};
-
+	
 			var wavesurfer = WaveSurfer.create({
 				container: '#waveform',
 				waveColor: 'rgba(211, 211, 211, 0.48)',
@@ -310,20 +317,11 @@ width: 1140px;
 				$("#play_btn, #share_btn, #down_btn").css('cursor','not-allowed');
 				$("#play_btn, #share_btn, #down_btn").attr('disabled',true);
 				var filter = "win16|win32|win64|mac";
-				/*if(navigator.platform){ //loading event
-					if(0 > filter.indexOf(navigator.platform.toLowerCase())){
-						//모바일일 경우
-						setTimeout(_showPage,20000);
-					}else{
-						//PC화면일 경우
-						setTimeout(_showPage,3500);
-					}
-				}*/
 				
 				$(window).resize(function(){
 					wavesurfer.zoom(1);
 				});
-
+	
 			});
 			
 		//파일 다운로드
