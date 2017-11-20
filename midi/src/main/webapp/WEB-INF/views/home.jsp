@@ -201,6 +201,14 @@ background-size: 40px 15px;}
 	width:170px;
 	display: inline-block;
 }
+.starth:hover, .rollh:hover, .resh:hover, .bar:hover, .bpm:hover{
+	transform:scale(1.1);             /*  default */
+	-webkit-transform:scale(1.1);  /*  chrome */
+	-moz-transform:scale(1.1);     /* FireFox */
+	-o-transform:scale(1.1);        /* Opera */
+	cursor: pointer;
+}
+
 
 /*responsive media css*/
 @media (max-width: 1920px) {
@@ -463,6 +471,7 @@ $(document).ready(function(){
 						$('.roll_dice_bottom').empty();
 						$('.roll_dice_bottom').append("<span class='roll_btn' id='result'><img src='${pageContext.servletContext.contextPath}/resources/images/result.png'></span>");
 						$('.midi_dice_left').attr("id","result");
+						$("#result > img").addClass("resh");
 					}
 					graph=graph+per;
 					$('#seqBar').width(graph+"%");
@@ -520,7 +529,7 @@ $(document).ready(function(){
     		</div>
 			<div class="set_btn">
 				<span id="startBtn" class="start_btn"> 
-					<img src="${pageContext.servletContext.contextPath}/resources/images/start.png">
+					<img src="${pageContext.servletContext.contextPath}/resources/images/start.png" class="starth">
 				</span>
 			</div>
 			</div>
@@ -565,7 +574,7 @@ $(document).ready(function(){
 						<form action="save" method="post" id="doResult">
 							<div class="roll_dice_bottom">
 								<span class="roll_btn" id="roll">
-									<img src="${pageContext.servletContext.contextPath}/resources/images/roll.png">
+									<img src="${pageContext.servletContext.contextPath}/resources/images/roll.png" class="rollh">
 								</span>
 							</div>
 							<div id="midiNames"></div>

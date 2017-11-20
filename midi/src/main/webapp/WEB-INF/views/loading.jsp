@@ -30,7 +30,19 @@
 		from {background-color: #69349c;}
 		to {background-color: #d22f7c;}
 	}
-
+	
+	.grad2{
+		text-align: center;
+		width: 100%;
+		height: 24em;
+		background-color:#69349c;
+	}
+	.move:hover{
+		transform:scale(1.1);             /*  default */
+		-webkit-transform:scale(1.1);  /*  chrome */
+		-moz-transform:scale(1.1);     /* FireFox */
+		-o-transform:scale(1.1);        /* Opera */
+	}
 	</style>
 </head>
 <body>
@@ -42,12 +54,29 @@
 		<img id="i" src="${pageContext.servletContext.contextPath}/resources/images/801.gif" style="padding-top:10em;">
 	</div>
 </div>
+<div class="grad2" style="display: none;">
+	<div>
+		<a href="javascript:downMp4();"><img id="youtUpload" src="${pageContext.servletContext.contextPath}/resources/images/midipink2.png" alt="이미지" style="padding-top:4em; width:10em;" class="move"></a>
+	</div>
+	<div style="padding-top:3em; font-weight:bold;" id="youtubeTxt">
+		파일 변환이 완료되었습니다<br>주사위를 클릭해주세요.<br>
+		<p style="font-size: 14px;">(유투브 및 인스타그램에 동영상을 공유해보세요)</p>
+	</div>
+</div>
 <script>
 function process(){
 	$("#i").css("display","none");
 	$("#youtUpload").fadeIn(2000);
 }
 
+function finishConv(){
+	$(".grad").css("display","none");
+	$(".grad2").fadeIn(2000);
+}
+
+function downMp4(){
+	window.open("../res/download2.do?m=${mus}");	
+}
 
 function uploading(){
 	$.ajax({
@@ -64,7 +93,7 @@ function uploading(){
 				location.href="youtbs?id="+data.id;
 			}else{
 				alert("에러가 발생하였습니다.");
-				window.close();	
+				//window.close();	
 			}
 		},
 		error : function(request,status,error){
@@ -87,11 +116,12 @@ $(function(){
 		success : function(data){
 			console.log(data);
 			if(data.code == 0){
-				process();
-				uploading(); //유투브 업로드 진행
+				//process();
+				finishConv();
+				//uploading(); //유투브 업로드 진행
 			}else{
 				alert("에러가 발생하였습니다.");
-				window.close();	
+				//window.close();	
 			}
 		},
 		error : function(){

@@ -211,6 +211,7 @@ width: 1140px;
 .midi_res_btn{ padding: 1%; height: 160px; width:100%;}
 .midi_res_btn_center{ text-align:center;}
 #waveform{ display:none;}
+}
 .play_m:hover, .down_m:hover, .share_m:hover{
 	transform:scale(1.1);             /*  default */
 	-webkit-transform:scale(1.1);  /*  chrome */
@@ -287,7 +288,8 @@ width: 1140px;
 			//유투브 업로드를 위한 파일 병합
 			function shareYtb(){
 				if(c == 1){
-					alert("파일 변환 및 업로드를 진행하였습니다.");
+					//alert("파일 변환 및 업로드를 진행하였습니다.");
+					alert("파일 변환을 진행하였습니다.");
 				}
 				var open = window.open("","loading","resizable=no, width=500, height=400");
 				var f = document.merge;
