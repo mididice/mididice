@@ -77,4 +77,23 @@ public class FileController {
 		return new ModelAndView("download","downloadFile",down);
 	}
 	
+	//파일 다운로드
+		@RequestMapping(value="/res/download2.do", method=RequestMethod.GET)
+		public ModelAndView download2(@RequestParam("m") String m, HttpServletRequest request
+				) throws Exception{
+			
+			//최종 mp3파일의 경로
+			String realPath = request.getSession().getServletContext().getRealPath("/resources/mp4/");
+
+			//File down = new File(realPath+r.decrypt(enc, offset)+".mid"); // ==> mp3로 변경해야함
+			File down = new File(realPath+m+".mp4");
+			
+			//System.out.println(realPath+r.decrypt(enc, offset));
+			if(!down.canRead()){
+				throw new Exception("파일을 찾을수 없습니다(^_^)");
+				
+			}
+			return new ModelAndView("download","downloadFile",down);
+		}
+	
 }
