@@ -1,4 +1,4 @@
-package com.yapp.midi.util;
+package com.mididice.util;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

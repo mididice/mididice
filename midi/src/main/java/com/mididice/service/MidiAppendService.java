@@ -1,4 +1,4 @@
-package com.yapp.midi.service;
+package com.mididice.service;
 
 
 public interface MidiAppendService {

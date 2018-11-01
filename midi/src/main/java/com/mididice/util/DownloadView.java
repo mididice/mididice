@@ -1,4 +1,4 @@
-package com.yapp.midi.util;
+package com.mididice.util;
 
 import java.io.File;
 import java.io.FileInputStream;

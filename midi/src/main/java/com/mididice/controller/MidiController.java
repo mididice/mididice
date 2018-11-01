@@ -1,4 +1,4 @@
-package com.yapp.midi.controller;
+package com.mididice.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.yapp.midi.util.*;
+import com.mididice.util.*;
 
 @Controller
 public class MidiController {
@@ -91,10 +91,10 @@ public class MidiController {
 		String enc;
 		
 		if(midiName.indexOf('.')==-1){
-			//íŒŒì¼ì´ë¦„ì´ í™•ì¥ìê°€ ì—†ëŠ”ê²½ìš°
+			//?ŒŒ?¼?´ë¦„ì´ ?™•?¥?ê°? ?—†?Š”ê²½ìš°
 			enc = r.encrypt(midiName, offset);
 		}else{
-			//íŒŒì¼ì´ë¦„ì´ í™•ì¥ìê°€ ìˆëŠ”ê²½ìš°
+			//?ŒŒ?¼?´ë¦„ì´ ?™•?¥?ê°? ?ˆ?Š”ê²½ìš°
 			enc = r.encrypt(midiName.substring(0, midiName.length()-4), offset);
 		}
 		

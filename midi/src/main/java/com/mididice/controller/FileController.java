@@ -1,4 +1,4 @@
-package com.yapp.midi.controller;
+package com.mididice.controller;
 
 import java.io.File;
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.yapp.midi.util.RandomString;
+
+import com.mididice.util.RandomString;
 
 /* 
-	íŒŒì¼ ë‹¤ìš´ë¡œë“œ ë° ê²°ê³¼í™”ë©´ ì»¨íŠ¸ë¡¤ëŸ¬
-	Request : (/res?filename=íŒŒì¼ëª…)  ==> (/res/randomstring) ==> mp3íŒŒì¼ ë‹¤ìš´, ì¬ìƒ ë“±
+	?ŒŒ?¼ ?‹¤?š´ë¡œë“œ ë°? ê²°ê³¼?™”ë©? ì»¨íŠ¸ë¡¤ëŸ¬
+	Request : (/res?filename=?ŒŒ?¼ëª?)  ==> (/res/randomstring) ==> mp3?ŒŒ?¼ ?‹¤?š´, ?¬?ƒ ?“±
 */
 
 @Controller
@@ -26,8 +27,8 @@ public class FileController {
 	private static final int offset = 25;
 	
 	/*	
-	 	midiíŒŒì¼ ë³‘í•© í›„, mp3íŒŒì¼ë¡œ ë³€í™˜í•˜ì—¬ íŒŒì¼ëª…ì„ ë„˜ê²¨ë°›ì•„ì•¼ í•œë‹¤!!^^
-		filenameì„ getë°©ì‹ìœ¼ë¡œ ë„˜ê²¨ì£¼ì–´ì•¼ í•¨ (ì˜ˆ : /res?filename=íŒŒì¼ëª…)
+	 	midi?ŒŒ?¼ ë³‘í•© ?›„, mp3?ŒŒ?¼ë¡? ë³??™˜?•˜?—¬ ?ŒŒ?¼ëª…ì„ ?„˜ê²¨ë°›?•„?•¼ ?•œ?‹¤!!^^
+		filename?„ getë°©ì‹?œ¼ë¡? ?„˜ê²¨ì£¼?–´?•¼ ?•¨ (?˜ˆ : /res?filename=?ŒŒ?¼ëª?)
 	*/
 	
 	@RequestMapping(value = "/res", method=RequestMethod.GET)
@@ -35,10 +36,10 @@ public class FileController {
 		String enc;
 		
 		if(filename.indexOf('.')==-1){
-			//íŒŒì¼ì´ë¦„ì´ í™•ì¥ìê°€ ì—†ëŠ”ê²½ìš°
+			//?ŒŒ?¼?´ë¦„ì´ ?™•?¥?ê°? ?—†?Š”ê²½ìš°
 			enc = r.encrypt(filename, offset);
 		}else{
-			//íŒŒì¼ì´ë¦„ì´ í™•ì¥ìê°€ ìˆëŠ”ê²½ìš°
+			//?ŒŒ?¼?´ë¦„ì´ ?™•?¥?ê°? ?ˆ?Š”ê²½ìš°
 			enc = r.encrypt(filename.substring(0, filename.length()-4), offset);
 		}
 		//System.out.println(enc);
@@ -46,7 +47,7 @@ public class FileController {
 		return "redirect:/res/"+enc;
 	}
 	
-	//íŒŒì¼ëª… ë³€í™˜ url ìƒì„± (ì˜ˆ: /res/randomstring)
+	//?ŒŒ?¼ëª? ë³??™˜ url ?ƒ?„± (?˜ˆ: /res/randomstring)
 	@RequestMapping(value = "/res/{enc}", method=RequestMethod.GET)
 	public String resultUrl(Model model, @PathVariable String enc){
 		String filen = r.decrypt(enc, offset);
@@ -55,42 +56,42 @@ public class FileController {
 		String playPath = "../resources/save/";
 		model.addAttribute("p",playPath);
 		model.addAttribute("resImg","res_"+enc+".jpg");
-		return "result"; //ê²°ê³¼íŒŒì¼ ==> result fileë¡œ ë³€ê²½í•´ì•¼í•¨
+		return "result"; //ê²°ê³¼?ŒŒ?¼ ==> result fileë¡? ë³?ê²½í•´?•¼?•¨
 	}
 	
-	//íŒŒì¼ ë‹¤ìš´ë¡œë“œ
+	//?ŒŒ?¼ ?‹¤?š´ë¡œë“œ
 	@RequestMapping(value="/res/download.do", method=RequestMethod.GET)
 	public ModelAndView download(@RequestParam("fe") String enc, HttpServletRequest request
 			) throws Exception{
 		
-		//ìµœì¢… mp3íŒŒì¼ì˜ ê²½ë¡œ
+		//ìµœì¢… mp3?ŒŒ?¼?˜ ê²½ë¡œ
 		String realPath = request.getSession().getServletContext().getRealPath("/resources/save/");
 
-		//File down = new File(realPath+r.decrypt(enc, offset)+".mid"); // ==> mp3ë¡œ ë³€ê²½í•´ì•¼í•¨
+		//File down = new File(realPath+r.decrypt(enc, offset)+".mid"); // ==> mp3ë¡? ë³?ê²½í•´?•¼?•¨
 		File down = new File(realPath+r.decrypt(enc, offset)+".mp3");
 		
 		//System.out.println(realPath+r.decrypt(enc, offset));
 		if(!down.canRead()){
-			throw new Exception("íŒŒì¼ì„ ì°¾ì„ìˆ˜ ì—†ìŠµë‹ˆë‹¤(^_^)");
+			throw new Exception("?ŒŒ?¼?„ ì°¾ì„?ˆ˜ ?—†?Šµ?‹ˆ?‹¤(^_^)");
 			
 		}
 		return new ModelAndView("download","downloadFile",down);
 	}
 	
-	//íŒŒì¼ ë‹¤ìš´ë¡œë“œ
+	//?ŒŒ?¼ ?‹¤?š´ë¡œë“œ
 		@RequestMapping(value="/res/download2.do", method=RequestMethod.GET)
 		public ModelAndView download2(@RequestParam("m") String m, HttpServletRequest request
 				) throws Exception{
 			
-			//ìµœì¢… mp3íŒŒì¼ì˜ ê²½ë¡œ
+			//ìµœì¢… mp3?ŒŒ?¼?˜ ê²½ë¡œ
 			String realPath = request.getSession().getServletContext().getRealPath("/resources/mp4/");
 
-			//File down = new File(realPath+r.decrypt(enc, offset)+".mid"); // ==> mp3ë¡œ ë³€ê²½í•´ì•¼í•¨
+			//File down = new File(realPath+r.decrypt(enc, offset)+".mid"); // ==> mp3ë¡? ë³?ê²½í•´?•¼?•¨
 			File down = new File(realPath+m+".mp4");
 			
 			//System.out.println(realPath+r.decrypt(enc, offset));
 			if(!down.canRead()){
-				throw new Exception("íŒŒì¼ì„ ì°¾ì„ìˆ˜ ì—†ìŠµë‹ˆë‹¤(^_^)");
+				throw new Exception("?ŒŒ?¼?„ ì°¾ì„?ˆ˜ ?—†?Šµ?‹ˆ?‹¤(^_^)");
 				
 			}
 			return new ModelAndView("download","downloadFile",down);

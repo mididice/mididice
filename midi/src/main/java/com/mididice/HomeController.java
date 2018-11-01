@@ -1,4 +1,4 @@
-package com.yapp.midi;
+package com.mididice;
 
 import java.io.File;
 import java.io.IOException;

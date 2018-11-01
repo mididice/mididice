@@ -1,4 +1,4 @@
-package com.yapp.midi.controller;
+package com.mididice.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /*
- 	midië¥¼ mp3ë¡œ ë³€í™˜í•˜ëŠ” ì»¨íŠ¸ë¡¤ëŸ¬	
- 	saveì— ì €ì¥ë˜ì–´ ìˆëŠ” midiíŒŒì¼ì„ mp3ë¡œ ë³€í™˜í•œë‹¤.
+ 	midië¥? mp3ë¡? ë³??™˜?•˜?Š” ì»¨íŠ¸ë¡¤ëŸ¬	
+ 	save?— ???¥?˜?–´ ?ˆ?Š” midi?ŒŒ?¼?„ mp3ë¡? ë³??™˜?•œ?‹¤.
  */
 public class MidiToMp3Controller {
-	//midiíŒŒì¼ë“¤ì´ ìˆëŠ” ê²½
+	//midi?ŒŒ?¼?“¤?´ ?ˆ?Š” ê²?
 	//private final static String dirPath = "../resources/save";
 
 	@RequestMapping(value = "/midiToMp3", method=RequestMethod.GET)
 	public String midiToMp3(@RequestParam(value="midi")String midiPath) {
 		// TODO Auto-generated method stub
 		try {
-			//ë³€ìˆ˜ commandëŠ” midië¥¼ mp3ë¡œ ë³€í™˜í•˜ëŠ” ë¦¬ëˆ…ìŠ¤ ëª…ë ¹ì–´ì´ 
+			//ë³??ˆ˜ command?Š” midië¥? mp3ë¡? ë³??™˜?•˜?Š” ë¦¬ëˆ…?Š¤ ëª…ë ¹?–´?´ 
 			//String command = "timidity -Ow -o - "+midiPath+".mid | lame - "+midiPath+".mp3";
 			String[] command = {
 					"/bin/sh",
