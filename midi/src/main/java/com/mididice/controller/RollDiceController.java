@@ -1,4 +1,4 @@
-package com.yapp.midi.controller;
+package com.mididice.controller;
 
 import java.nio.file.Watchable;
 import java.util.Random;

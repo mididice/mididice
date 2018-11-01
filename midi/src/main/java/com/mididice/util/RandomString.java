@@ -1,4 +1,4 @@
-package com.yapp.midi.util;
+package com.mididice.util;
 
 public class RandomString {
 	  static char[] chars = {

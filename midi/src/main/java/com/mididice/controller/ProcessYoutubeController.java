@@ -1,4 +1,4 @@
-package com.yapp.midi.controller;
+package com.mididice.controller;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -29,7 +29,7 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
 import com.google.common.collect.Lists;
-import com.yapp.midi.util.YoutubeAuth;
+import com.mididice.util.YoutubeAuth;
 
 @Controller
 public class ProcessYoutubeController {
