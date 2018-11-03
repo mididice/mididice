@@ -2,21 +2,17 @@ package com.mididice.controller;
 
 import java.io.File;
 import java.io.IOException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.sound.midi.InvalidMidiDataException;
 import org.jfugue.midi.MidiFileManager;
 import org.jfugue.pattern.Pattern;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mididice.service.MidiToMp3Service;
 import com.mididice.util.*;
 
 @Controller
@@ -41,7 +37,7 @@ public class MidiController {
 			RedirectAttributes rediAttr) throws IOException, InvalidMidiDataException{
 		
 		GenerateFileName gfn = new GenerateFileName();
-		MidiToMp3Controller toMp3 = new MidiToMp3Controller();
+		MidiToMp3Service toMp3 = new MidiToMp3Service();
 		
 		Pattern patternOne = null;
 		Pattern resultMidi = new Pattern();
@@ -91,10 +87,10 @@ public class MidiController {
 		String enc;
 		
 		if(midiName.indexOf('.')==-1){
-			//?ŒŒ?¼?´ë¦„ì´ ?™•?¥?ê°? ?—†?Š”ê²½ìš°
+			//?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ë¦„ì´ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ê²½ìš°
 			enc = r.encrypt(midiName, offset);
 		}else{
-			//?ŒŒ?¼?´ë¦„ì´ ?™•?¥?ê°? ?ˆ?Š”ê²½ìš°
+			//?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ë¦„ì´ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ê²½ìš°
 			enc = r.encrypt(midiName.substring(0, midiName.length()-4), offset);
 		}
 		

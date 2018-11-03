@@ -1,34 +1,34 @@
-package com.mididice.controller;
+package com.mididice.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 
 /*
- 	midiÎ•? mp3Î°? Î≥??ôò?ïò?äî Ïª®Ìä∏Î°§Îü¨	
- 	save?óê ???û•?êò?ñ¥ ?ûà?äî midi?åå?ùº?ùÑ mp3Î°? Î≥??ôò?ïú?ã§.
  */
-public class MidiToMp3Controller {
-	//midi?åå?ùº?ì§?ù¥ ?ûà?äî Í≤?
+@Service
+public class MidiToMp3Service {
 	//private final static String dirPath = "../resources/save";
+	private static final Logger logger = LoggerFactory.getLogger(MidiToMp3Service.class);
 
-	@RequestMapping(value = "/midiToMp3", method=RequestMethod.GET)
-	public String midiToMp3(@RequestParam(value="midi")String midiPath) {
+	public String midiToMp3(String midiPath) {
 		// TODO Auto-generated method stub
 		try {
-			//Î≥??àò command?äî midiÎ•? mp3Î°? Î≥??ôò?ïò?äî Î¶¨ÎàÖ?ä§ Î™ÖÎ†π?ñ¥?ù¥ 
+			//command midi
 			//String command = "timidity -Ow -o - "+midiPath+".mid | lame - "+midiPath+".mp3";
 			String[] command = {
 					"/bin/sh",
 					"-c",
 					"timidity -Ow -o - "+midiPath+".mid | lame - "+midiPath+".mp3"
 					};
-			System.out.println(command);
+			logger.info("converted command is {}", (Object)command);
+			
 			Runtime rt = Runtime.getRuntime();
 			
 			Process p = rt.exec(command);
@@ -39,10 +39,9 @@ public class MidiToMp3Controller {
 			outputGobbler.start();
 			
 			int ev = p.waitFor();
-			System.out.println("exitValue:"+ev);
+			logger.info("exitValue: {}", ev);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			
+			logger.error("midi to mp3");
 			return "test.mp3";
 		}
 		return midiPath+".mp3";

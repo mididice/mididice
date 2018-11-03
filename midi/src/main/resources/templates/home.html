@@ -24,14 +24,14 @@ div{
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
 }
-.midiyapp_logo{background:url("/midi/resources/images/main.png") no-repeat;
+.midiyapp_logo{background:url("/resources/images/main.png") no-repeat;
 background-size: 140px 22px;
     margin-right: 0;
     margin-left: 50px;
     height:50px; width:160px;
     display:inline-block;
     margin-top: 14px;}
-.midiyapp_reset{background:url("/midi/resources/images/reset.png") no-repeat;
+.midiyapp_reset{background:url("/resources/images/reset.png") no-repeat;
 height:25px; width:90px;
 display:inline-block; float:right;    margin-left: 30px;
     margin-top: 18px;
@@ -298,7 +298,7 @@ $(document).on("click","#result",function() {
 var imgSrc;
 $(document).on("mouseenter",".another_love",function(){
 	imgSrc = $(this).children().find('.pattern_img').attr("src");
-	$(this).children().find('.pattern_img').attr('src', '${pageContext.servletContext.contextPath}/resources/images/play_midi.png');
+	$(this).children().find('.pattern_img').attr('src', '/resources/images/play_midi.png');
 });
 $(document).on("mouseleave",".another_love",function(){
 	$(this).children().find('.pattern_img').attr('src', imgSrc);
@@ -307,14 +307,14 @@ function animateDice(purpleDice, pinkDice) {
     var i = 0;
     var timer = setInterval(function(){
     	if(i<10){
-    		$('.midi_dice_right').children().first().attr('src', '${pageContext.servletContext.contextPath}/resources/images/dice/VioletDice01_0000'+i+'.png');	
-    		$('.midi_dice_left').children().first().attr('src', '${pageContext.servletContext.contextPath}/resources/images/dice/PinkDice01_0000'+i+'.png');
+    		$('.midi_dice_right').children().first().attr('src', '/resources/images/dice/VioletDice01_0000'+i+'.png');	
+    		$('.midi_dice_left').children().first().attr('src', '/resources/images/dice/PinkDice01_0000'+i+'.png');
     	}else if(i<60){
-        	$('.midi_dice_right').children().first().attr('src', '${pageContext.servletContext.contextPath}/resources/images/dice/VioletDice01_000'+i+'.png');            
-        	$('.midi_dice_left').children().first().attr('src', '${pageContext.servletContext.contextPath}/resources/images/dice/PinkDice01_000'+i+'.png');            
+        	$('.midi_dice_right').children().first().attr('src', '/resources/images/dice/VioletDice01_000'+i+'.png');            
+        	$('.midi_dice_left').children().first().attr('src', '/resources/images/dice/PinkDice01_000'+i+'.png');            
         }else{
-        	$('.midi_dice_right').children().first().attr('src', '${pageContext.servletContext.contextPath}/resources/images/dice/VioletDice0'+purpleDice+'.png');
-        	$('.midi_dice_left').children().first().attr('src', '${pageContext.servletContext.contextPath}/resources/images/dice/PinkDice0'+pinkDice+'.png');
+        	$('.midi_dice_right').children().first().attr('src', '/resources/images/dice/VioletDice0'+purpleDice+'.png');
+        	$('.midi_dice_left').children().first().attr('src', '/resources/images/dice/PinkDice0'+pinkDice+'.png');
         	clearInterval(timer);
         	return;
         }
@@ -322,8 +322,8 @@ function animateDice(purpleDice, pinkDice) {
     }, 33)
 };
 var callback = function(midipath, pattern, seq){
-	$('#patterns').append("<div class='another_love'><a href='#' id='samdasu' onClick='MIDIjs.play(\"${pageContext.servletContext.contextPath}/resources/midi/"+midipath+"\");'>"
-			+"<img src='${pageContext.servletContext.contextPath}/resources/images/patterns/"
+	$('#patterns').append("<div class='another_love'><a href='#' id='samdasu' onClick='MIDIjs.play(\"/resources/midi/"+midipath+"\");'>"
+			+"<img src='/resources/images/patterns/"
 			+pattern+"' class='pattern_img' id='pattern"+seq+"'>");
 		
 		if(seq==0){
@@ -434,7 +434,7 @@ $(document).ready(function(){
 		
 		if(seq<bar){
 		
-		var url = "rollDice";
+		var url = "rolldice";
 		var seq = $('#seq').val();
 		$.ajax({
 			method :'GET',
@@ -465,7 +465,7 @@ $(document).ready(function(){
 					
 					if(seq==bar-1){
 						$('.roll_dice_bottom').empty();
-						$('.roll_dice_bottom').append("<span class='roll_btn' id='result'><img src='${pageContext.servletContext.contextPath}/resources/images/result.png'></span>");
+						$('.roll_dice_bottom').append("<span class='roll_btn' id='result'><img src='/resources/images/result.png'></span>");
 						$('.midi_dice_left').attr("id","result");
 						$("#result > img").addClass("resh");
 					}
@@ -525,7 +525,7 @@ $(document).ready(function(){
     		</div>
 			<div class="set_btn">
 				<span id="startBtn" class="start_btn"> 
-					<img src="${pageContext.servletContext.contextPath}/resources/images/start.png" class="starth">
+					<img src="/resources/images/start.png" class="starth">
 				</span>
 			</div>
 			</div>
@@ -553,10 +553,10 @@ $(document).ready(function(){
 				</div>
 				<div class="midi_dice_center">
 					<div class="midi_dice_left">
-						<img src="${pageContext.servletContext.contextPath}/resources/images/midipink2.png">
+						<img src="/resources/images/midipink2.png">
 					</div>
 					<div class="midi_dice_right">
-						<img src="${pageContext.servletContext.contextPath}/resources/images/midipurple2.png">
+						<img src="/resources/images/midipurple2.png">
 					</div>
 					
 				</div>
@@ -570,7 +570,7 @@ $(document).ready(function(){
 						<form action="save" method="post" id="doResult">
 							<div class="roll_dice_bottom">
 								<span class="roll_btn" id="roll">
-									<img src="${pageContext.servletContext.contextPath}/resources/images/roll.png" class="rollh">
+									<img src="/resources/images/roll.png" class="rollh">
 								</span>
 							</div>
 							<div id="midiNames"></div>
