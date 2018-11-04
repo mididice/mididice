@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 
 /*
@@ -17,15 +19,18 @@ public class MidiToMp3Service {
 	//private final static String dirPath = "../resources/save";
 	private static final Logger logger = LoggerFactory.getLogger(MidiToMp3Service.class);
 
-	public String midiToMp3(String midiPath) {
-		// TODO Auto-generated method stub
+	public String midiToMp3(String fileName) {
+		
 		try {
+			URL midiDir = ResourceUtils.getURL("classpath:static/midi/");
+			String midiPath = midiDir.getPath();
+			String pathFileName = midiPath+fileName;
 			//command midi
 			//String command = "timidity -Ow -o - "+midiPath+".mid | lame - "+midiPath+".mp3";
 			String[] command = {
 					"/bin/sh",
 					"-c",
-					"timidity -Ow -o - "+midiPath+".mid | lame - "+midiPath+".mp3"
+					"timidity -Ow -o - "+pathFileName+".mid | lame - "+pathFileName+".mp3"
 					};
 			logger.info("converted command is {}", (Object)command);
 			
@@ -40,11 +45,13 @@ public class MidiToMp3Service {
 			
 			int ev = p.waitFor();
 			logger.info("exitValue: {}", ev);
+			return pathFileName+".mp3";
 		} catch (Exception e) {
-			logger.error("midi to mp3");
-			return "test.mp3";
+			logger.error("midi to mp3 not working");
+			e.printStackTrace();
+			return "";
 		}
-		return midiPath+".mp3";
+		
 	}
 }
 class StreamGobbler extends Thread

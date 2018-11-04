@@ -1,5 +1,6 @@
 <!Doctype html>
-<html><head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
 <meta charset="UTF-8">
 <meta name="description" content="LiST">
 <!-- Mobile Specific Meta -->
@@ -24,14 +25,14 @@ div{
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
 }
-.midiyapp_logo{background:url("/midi/resources/images/main.png") no-repeat;
+.midiyapp_logo{background:url("/resources/images/main.png") no-repeat;
 background-size: 140px 22px;
     margin-right: 0;
     margin-left: 50px;
     height:50px; width:160px;
     display:inline-block;
     margin-top: 14px;}
-.midiyapp_reset{background:url("/midi/resources/images/reset.png") no-repeat;
+.midiyapp_reset{background:url("/resources/images/reset.png") no-repeat;
 height:25px; width:90px;
 display:inline-block; float:right;    margin-left: 30px;
     margin-top: 18px;
@@ -235,31 +236,31 @@ width: 1140px;
 				<div class="midi_res_img">
 					<div class="set_result">
 						<p class="set_title_result">Bar</p>
-						<p class="set_value_result">${bar}</p>
+						<p class="set_value_result" th:text="${bar}"></p>
 					</div>
 					<div class="set_result">
 						<p class="set_title_result">Bpm</p>
-						<p class="set_value_result">${bpm}</p>
+						<p class="set_value_result" th:text="${bpm}"></p>
 					</div>
 					<div class="set_result">
 						<p class="set_title_result">Length</p>
-						<p class="set_value_result">${seconds}</p>
+						<p class="set_value_result" th:text="${seconds}"></p>
 					</div>
 					<div class="">
-						<img class="midi_result_img" src="${pageContext.servletContext.contextPath}/resources/resimg/${resImg}">
+						<img class="midi_result_img" th:src="'/resources/resimg/'+${resImg}">
 					</div>
 				</div>
 				
 				<div class="midi_res_btn">
 					<div>
-						<a href="javascript:wavesurfer.playPause()"><img src="${pageContext.servletContext.contextPath}/resources/images/play.png" class="play_m"></a>
-						<a id="down" href="javascript:downMp3();"><img src="${pageContext.servletContext.contextPath}/resources/images/download.png" class="down_m"></a>
-						<a href="javascript:shareYtb();"><img src="${pageContext.servletContext.contextPath}/resources/images/share.png" class="share_m"></a>
+						<a href="javascript:wavesurfer.playPause()"><img src="/resources/images/play.png" class="play_m"></a>
+						<a id="down" href="javascript:downMp3();"><img src="/resources/images/download.png" class="down_m"></a>
+						<a href="javascript:shareYtb();"><img src="/resources/images/share.png" class="share_m"></a>
 					</div>
 				</div>
 				<form action="" name="merge" method="post">
-					<input type="hidden" name="i" value="${resImg}">
-					<input type="hidden" name="m" value="${filename}">
+					<input type="hidden" name="i" th:value="${resImg}">
+					<input type="hidden" name="m" id="fileName" th:value="${filename}">
 				</form>
 				</div>
 			</div>
@@ -310,7 +311,8 @@ width: 1140px;
 				progressColor: 'rgba(255, 51, 126, 0.59)',
 				cursorColor: '#fff'
 			});
-			wavesurfer.load('/midi/resources/save/${filename}.mp3');
+			var fileName = $('#fileName').val();
+			wavesurfer.load('/resources/save/'+fileName+'.mp3');
 			//wavesurfer.load('/midi/resources/save/iu.mp3');
 			wavesurfer.on('ready',function(){
 				_showPage();
