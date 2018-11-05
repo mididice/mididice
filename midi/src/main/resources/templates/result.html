@@ -218,7 +218,7 @@ width: 1140px;
 	-o-transform:scale(1.1);        /* Opera */
 }
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="/resources/js/jquery.min.js"></script>
 </head>
 <body>
 <!-- header -->
@@ -260,25 +260,25 @@ width: 1140px;
 				</div>
 				<form action="" name="merge" method="post">
 					<input type="hidden" name="i" th:value="${resImg}">
-					<input type="hidden" name="m" id="fileName" th:value="${filename}">
+					<input type="hidden" name="m" th:value="${filename}">
 				</form>
 				</div>
+				<input type="hidden" id="fileName" th:value="${midiFile}">
 			</div>
 			<div id="waveform">
-      <wave style="display: block; position: relative; user-select: none; height: 128px; overflow-x: auto; overflow-y: hidden;"><canvas width="0" height="160" style="position: absolute; z-index: 1; left: 0px; top: 0px; bottom: 0px; width: 0px;"></canvas><wave style="position: absolute; z-index: 2; left: 0px; top: 0px; bottom: 0px; overflow: hidden; width: 0px; display: block; box-sizing: border-box; border-right: 1px solid rgb(255, 255, 255);"><canvas width="0" height="160" style="width: 0px;"></canvas></wave></wave></div>
+      <wave style="display: block; position: relative; user-select: none; height: 128px; overflow-x: auto; overflow-y: hidden;">
+      <canvas width="0" height="160" style="position: absolute; z-index: 1; left: 0px; top: 0px; bottom: 0px; width: 0px;"></canvas>
+      <wave style="position: absolute; z-index: 2; left: 0px; top: 0px; bottom: 0px; overflow: hidden; width: 0px; display: block; box-sizing: border-box; border-right: 1px solid rgb(255, 255, 255);">
+      <canvas width="0" height="160" style="width: 0px;"></canvas></wave></wave>
+     		</div>
 		<!-- bottom -->
 		<div>
 		</div>
 		</div>
 	</section>
 	<!-- Scripts -->
-			
-		<!--<script src="assets/js/jquery.dropotron.min.js"></script>
-		<script src="assets/js/skel.min.js"></script>
-		<script src="assets/js/util.js"></script>-->
-		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-		<!--<script src="assets/js/main.js"></script>-->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.6/wavesurfer.min.js"></script>
+	
+		<script type="text/javascript" src="/resources/js/wavesufer.min.js"></script>
 		<script>
 		
 			//파일 공유 클릭 여부

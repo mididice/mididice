@@ -1,7 +1,6 @@
 package com.mididice.controller;
 
 import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
 import javax.sound.midi.InvalidMidiDataException;
 
 import org.slf4j.Logger;
@@ -42,12 +41,11 @@ public class MidiController {
 			@RequestParam(value="seconds")String seconds,
 			@RequestParam(value="bar")String bar,
 			@RequestParam(value="bpm")String bpm,
-			HttpServletRequest request,
 			RedirectAttributes rediAttr) throws IOException, InvalidMidiDataException{
 				
 		String fileName = midiService.mergeMidi(names);
-		String mp3Name = mp3Service.midiToMp3(fileName);
-		
+//		String mp3Name = mp3Service.midiToMp3(fileName);
+		String mp3Name = "iu";
 		String[] imgNames = midiService.getImageArr(names);
 		String enc = midiService.getRandomFileName(fileName);
 		

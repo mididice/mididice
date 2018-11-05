@@ -8,6 +8,9 @@ Role the dice and play generated music
 ### Prerequisites
 
 * [jfugue](http://www.jfugue.org/) - music programming for java
+* [timidity](https://sourceforge.net/projects/timidity/) -  MIDI to WAVE converter
+* [MIDI.js](https://github.com/mudcube/MIDI.js) - midi library for web
+* [waveform.js](https://wavesurfer-js.org/) - audio waveform visualization
 
 ### Installing
 
