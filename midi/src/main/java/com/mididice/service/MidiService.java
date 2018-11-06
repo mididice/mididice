@@ -2,7 +2,6 @@ package com.mididice.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -19,7 +18,7 @@ import com.mididice.util.RandomString;
 public class MidiService {
 	private static final int offset = 25;
 
-	public String mergeMidi(String[] names) {
+	public String mergeMidi(String[] names, String seconds, String bar, String bpm) {
 		Pattern patternOne = null;
 		Pattern resultMidi = new Pattern();
 		
@@ -39,6 +38,7 @@ public class MidiService {
 				}			
 			}
 			String fileName = GenerateFileName.createName();
+			fileName = fileName + "-"+seconds+"hk"+bar+"hk"+bpm;
 			String midiName = fileName +".mid";
 			MidiFileManager.savePatternToMidi(resultMidi, new File(resultPath+midiName));
 			return fileName;

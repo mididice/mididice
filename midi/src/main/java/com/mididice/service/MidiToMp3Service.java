@@ -45,7 +45,7 @@ public class MidiToMp3Service {
 			
 			int ev = p.waitFor();
 			logger.info("exitValue: {}", ev);
-			return pathFileName+".mp3";
+			return fileName+".mp3";
 		} catch (Exception e) {
 			logger.error("midi to mp3 not working");
 			e.printStackTrace();

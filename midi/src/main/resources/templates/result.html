@@ -26,15 +26,15 @@
 				<div class="midi_res_img">
 					<div class="set_result">
 						<p class="set_title_result">Bar</p>
-						<p class="set_value_result" th:text="${bar}"></p>
+						<p class="set_value_result" id="bar"></p>
 					</div>
 					<div class="set_result">
 						<p class="set_title_result">Bpm</p>
-						<p class="set_value_result" th:text="${bpm}"></p>
+						<p class="set_value_result" id="bpm"></p>
 					</div>
 					<div class="set_result">
 						<p class="set_title_result">Length</p>
-						<p class="set_value_result" th:text="${seconds}"></p>
+						<p class="set_value_result" id="seconds"></p>
 					</div>
 					<div class="">
 						<img class="midi_result_img" th:src="'/resources/resimg/'+${resImg}">
@@ -45,7 +45,7 @@
 					<div>
 						<a href="javascript:wavesurfer.playPause()"><img src="/resources/images/play.png" class="play_m"></a>
 						<a id="down" href="javascript:downMp3();"><img src="/resources/images/download.png" class="down_m"></a>
-						<a href="javascript:shareYtb();"><img src="/resources/images/share.png" class="share_m"></a>
+						<a href=""><img src="/resources/images/share.png" class="share_m"></a>
 					</div>
 				</div>
 				<form action="" name="merge" method="post">

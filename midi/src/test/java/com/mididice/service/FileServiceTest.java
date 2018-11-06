@@ -3,11 +3,10 @@ package com.mididice.service;
 import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,11 +21,12 @@ import org.springframework.util.ResourceUtils;
 public class FileServiceTest {
 
 	@Test
-	public void resourceFileTest() throws MalformedURLException, FileNotFoundException, URISyntaxException {
+	public void resourceFileTest() throws URISyntaxException, IOException {
 
 		URL resultDir = ResourceUtils.getURL("classpath:static/save/");
 		
 		Resource resource = new UrlResource(resultDir.toURI()+"iu.mp3");
+		
 		if(resource.exists()) {
 			assertTrue(true);	
 		}else {

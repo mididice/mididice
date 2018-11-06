@@ -5,7 +5,6 @@ var c = 0;
 //유투브 업로드를 위한 파일 병합
 function shareYtb(){
 	if(c == 1){
-		//alert("파일 변환 및 업로드를 진행하였습니다.");
 		alert("파일 변환을 진행하였습니다.");
 	}
 	var open = window.open("","loading","resizable=no, width=500, height=400");
@@ -29,17 +28,17 @@ var wavesurfer = WaveSurfer.create({
 	progressColor: 'rgba(255, 51, 126, 0.59)',
 	cursorColor: '#fff'
 });
+
 var fileName = $('#fileName').val();
+
 wavesurfer.load('/resources/save/'+fileName+'.mp3');
-//wavesurfer.load('/midi/resources/save/iu.mp3');
 wavesurfer.on('ready',function(){
 	_showPage();
 	$("wave:first-child").css('height','25px');
 });
 
 wavesurfer.on('error',function(){
-	alert("파일이 존재하지 않습니다^^ 올바른경로로 접속하였는지 다시한번 확인해주세요~");
-	// ==> 추가이벤트 입력(리다이렉트, 창을 종료?, 버튼 비활성화 등등)
+	alert("File not found");
 });
 
 $(function(){
@@ -51,11 +50,21 @@ $(function(){
 	$(window).resize(function(){
 		wavesurfer.zoom(1);
 	});
-
 });
 
 //파일 다운로드
 function downMp3(){
-	var enc = $('#fe').val();
+	var enc = $('#fileName').val();
 	window.open("/download/"+enc);
 }
+$(document).ready(function(){
+	var fileName = $('#fileName').val();
+	if(fileName != null){
+		var bbs_arr = fileName.split("-");
+		var bbs = bbs_arr[bbs_arr.length - 1];
+		var bbs_el = bbs.split("hk")
+		$('#bar').text(bbs_el[1]);
+		$('#bpm').text(bbs_el[2]);
+		$('#seconds').text(bbs_el[0]);	
+	}
+});

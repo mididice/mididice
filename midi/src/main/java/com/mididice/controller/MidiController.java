@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mididice.service.FileService;
 import com.mididice.service.ImageService;
 import com.mididice.service.MidiService;
 import com.mididice.service.MidiToMp3Service;
@@ -26,12 +25,11 @@ public class MidiController {
 	private MidiService midiService;
 	private MidiToMp3Service mp3Service;
 	private ImageService imageService;
-	private FileService fileService;
-	public MidiController(MidiService midiService, MidiToMp3Service mp3Service, ImageService imageService, FileService fileService) {
+
+	public MidiController(MidiService midiService, MidiToMp3Service mp3Service, ImageService imageService) {
 		this.midiService = midiService;
 		this.mp3Service = mp3Service;
 		this.imageService = imageService;
-		this.fileService = fileService;
 	}
 	
 	/*
@@ -48,18 +46,19 @@ public class MidiController {
 			@RequestParam(value="bpm")String bpm,
 			RedirectAttributes rediAttr) throws IOException, InvalidMidiDataException{
 				
-		String fileName = midiService.mergeMidi(names);
-//		String pathMp3Name = mp3Service.midiToMp3(fileName);
-		String mp3Name = "iu";
+		String fileName = midiService.mergeMidi(names, seconds, bar, bpm);
+		String mp3Name = mp3Service.midiToMp3(fileName);
+//		String mp3Name = "iu";
 		String[] imgNames = midiService.getImageArr(names);
-		String enc = midiService.getRandomFileName(mp3Name); //for test
+//		String enc = midiService.getRandomFileName(mp3Name); //deprecated
 		
+		String enc = fileName; 
 		//append image 3x3, 4x4, 5x5 
 		String resImg = imageService.mergeImage(bar, imgNames, enc);
 		
 		String url = "redirect:/res/"+enc;
 		
-		rediAttr.addFlashAttribute("midiFile", mp3Name);
+		rediAttr.addFlashAttribute("midiFile", fileName);
 		rediAttr.addFlashAttribute("seconds", seconds);
 		rediAttr.addFlashAttribute("bar", bar);
 		rediAttr.addFlashAttribute("bpm", bpm);
@@ -69,18 +68,9 @@ public class MidiController {
 		
 	}
 	
-	@GetMapping("/res")
-	public String redirectResult(@RequestParam("filename")String filename, RedirectAttributes redi){
-		String enc = fileService.encrypt(filename);
-		redi.addAttribute("name", "name");
-		return "redirect:/res/"+enc;
-	}
-	
 	@GetMapping("/res/{enc}")
 	public String resultUrl(Model model, @PathVariable String enc){
-		String filen = fileService.decrypt(enc);
-		model.addAttribute("enc", enc);
-		model.addAttribute("filename",filen);
+		model.addAttribute("midiFile", enc);
 		model.addAttribute("resImg","res_"+enc+".jpg");
 		return "result"; 
 	}
