@@ -1,0 +1,126 @@
+<!Doctype html>
+<html><head>
+<meta charset="UTF-8">
+<meta name="description" content="midi">
+<!-- Mobile Specific Meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>midiDICE</title>
+<link rel="stylesheet" href="/resources/css/mididice.css">
+</head>
+<body>
+<!-- header -->
+	<header>
+		<div class="header" id="header">
+			<div class="midiyapp_logo"></div>
+			<a href="/midi"><span class="midiyapp_reset"></span></a>
+		</div>
+	</header>
+	<!-- center -->
+	<section>
+		<div class="container">
+		<div id="myModal" class="modal">
+  			<!-- Modal content -->
+  			<div class="modal-content">
+    		<p>시작 전 곡의 길이 정하기</p>
+    		<div class="set_div">
+				<p class="set_title_time">Length</p>
+				<div class="set_time" id="setTime">
+					16sec
+				</div>
+    		</div>
+    		<div class="set_div">
+				<p class="set_title">Bar</p>
+				<p class="">
+					<span class="bar selected_bar">9</span><span class="bar">16</span><span class="bar">25</span>
+				</p>
+    		</div>
+    		<div class="set_div">
+				<p class="set_title">Bpm</p>
+				<p class="">
+					<span class="bpm selected_bpm">80</span><span class="bpm">120</span><span class="bpm">150</span>
+				</p>
+    		</div>
+			<div class="set_btn">
+				<span id="startBtn" class="start_btn"> 
+					<img src="/resources/images/start.png" class="starth">
+				</span>
+			</div>
+			</div>
+		</div>
+			<div class="midi_content">
+				<div class="midi_setting_left">
+					<div class="sk_nights_first">
+						<div>
+							<p class="play_condi_title">second</p>
+							<p class="play_condi_result" id="second"></p>
+						</div>
+					</div>
+					<div class="sk_nights">
+						<div>
+							<p class="play_condi_title">BAR</p>
+							<p class="play_condi_result" id="bar"></p>
+						</div>
+					</div>
+					<div class="sk_nights">
+						<div>
+							<p class="play_condi_title">BPM</p>
+							<p class="play_condi_result" id="bpm"></p>
+						</div>
+					</div>
+				</div>
+				<div class="midi_dice_center">
+					<div class="midi_dice_left">
+						<img src="/resources/images/midipink2.png">
+					</div>
+					<div class="midi_dice_right">
+						<img src="/resources/images/midipurple2.png">
+					</div>
+					
+				</div>
+				<div class="midi_current_right">
+					<div id="midiResult" class="midi_result">
+						
+						<div class="sequence_number" id="sequenceNumber"></div>
+						<div class="sequence_bar">
+							<div id="seqBar"></div>
+						</div>
+						<form action="save" method="post" id="doResult">
+							<div class="roll_dice_bottom">
+								<span class="roll_btn" id="roll">
+									<img src="/resources/images/roll.png" class="rollh">
+								</span>
+							</div>
+							<div id="midiNames"></div>
+							<input type="hidden" id="secondData" name="seconds" value="">
+							<input type="hidden" id="bpmData" name="bpm" value="">
+							<input type="hidden" id="barData" name="bar" value="">
+						</form>
+						<input type="hidden" id="seq" name="sequence" value="0">
+					</div>
+				</div>
+			</div>
+			<!-- pattern -->
+			<div class="progressNumber">
+				<div class="holic_num" id="holic1"></div>
+				<div class="holic_num" id="holic2"></div>
+				<div class="holic_num" id="holic3"></div>
+				<div class="holic_num" id="holic4"></div>
+				<div class="holic_num" id="holic5">1</div>
+				<div class="holic_num" id="holic6">2</div>
+				<div class="holic_num" id="holic7">3</div>
+				<div class="holic_num" id="holic8">4</div>
+				<div class="holic_num" id="holic9">5</div>
+			</div>
+			<div id="waveform_set">
+				<div id="patterns">
+				</div>
+			</div>
+			</div>
+	</section>
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="/resources/js/MIDI.min.js"></script>
+<script type="text/javascript" src="/resources/js/app/mididicehome.js"></script>
+	</body>
+</html>
