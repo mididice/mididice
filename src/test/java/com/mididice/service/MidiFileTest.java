@@ -8,6 +8,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +28,9 @@ public class MidiFileTest {
 		URL dir = ResourceUtils.getURL("classpath:static/midi/");
         File folder = new File(dir.toURI());
         File[] listOfFiles = folder.listFiles();
-        assertEquals(listOfFiles[0].getName(), "11.mid");
+        List<File> list = new ArrayList<File>();
+        list.addAll(Arrays.asList(listOfFiles));
+        Collections.sort(list);
+        assertEquals(list.get(0).getName(), "11.mid");
 	}
 }
