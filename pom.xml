@@ -68,7 +68,17 @@
 	            <artifactId>maven-surefire-plugin</artifactId>
 	            <configuration>
 	                <useSystemClassLoader>false</useSystemClassLoader>
+	                <archive>
+				      <manifest>
+				        <mainClass>com.mididice.MididiceApplication</mainClass>
+				      </manifest>
+				    </archive>
 	            </configuration>
+	            <executions>
+	                <execution>
+	                    <phase>package</phase>
+	                </execution>
+            	</executions>
 			</plugin>
 		</plugins>
 	</build>
