@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mhk</groupId>
+	<groupId>com</groupId>
 	<artifactId>mididice</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
@@ -22,6 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<start-class>com.mididice.MididiceApplication</start-class>
 	</properties>
 
 	<dependencies>
@@ -64,22 +65,25 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+    				<includeSystemScope>true</includeSystemScope>
+  				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 	            <artifactId>maven-surefire-plugin</artifactId>
 	            <configuration>
-	            	<includeSystemScope>true</includeSystemScope>
 	                <useSystemClassLoader>false</useSystemClassLoader>
-	                <archive>
-				      <manifest>
-				        <mainClass>com.mididice.MididiceApplication</mainClass>
-				      </manifest>
-				    </archive>
 	            </configuration>
-	            <executions>
-	                <execution>
-	                    <phase>package</phase>
-	                </execution>
-            	</executions>
 			</plugin>
 		</plugins>
 	</build>
