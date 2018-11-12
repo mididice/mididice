@@ -10,7 +10,7 @@ Role the dice and play generated music
 
 * [jfugue](http://www.jfugue.org/) - music programming for java
 * [timidity](https://sourceforge.net/projects/timidity/) -  MIDI to WAVE converter
-* [MIDI.js](https://github.com/mudcube/MIDI.js) - midi library for web
+* [MIDI.js](http://www.midijs.net/) - JavaScript MIDI Player using W3C Web Audio
 * [waveform.js](https://wavesurfer-js.org/) - audio waveform visualization
 
 ### Installing
