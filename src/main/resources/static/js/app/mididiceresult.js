@@ -31,7 +31,7 @@ var wavesurfer = WaveSurfer.create({
 
 var fileName = $('#fileName').val();
 
-wavesurfer.load('/resources/save/'+fileName+'.mp3');
+wavesurfer.load('/music/'+fileName);
 wavesurfer.on('ready',function(){
 	_showPage();
 	$("wave:first-child").css('height','25px');
@@ -60,6 +60,7 @@ function downMp3(){
 $(document).ready(function(){
 	var fileName = $('#fileName').val();
 	if(fileName != null){
+		fileName = fileName.substring(0, fileName.length-4);
 		var bbs_arr = fileName.split("-");
 		var bbs = bbs_arr[bbs_arr.length - 1];
 		var bbs_el = bbs.split("hk")

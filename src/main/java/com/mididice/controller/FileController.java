@@ -29,7 +29,7 @@ public class FileController {
 	}
 	
 	@GetMapping("/download/{enc}")
-	public ResponseEntity download(@PathVariable String enc
+	public ResponseEntity<Resource> download(@PathVariable String enc
 			) throws Exception{
 
         Resource resource = fileService.loadFileAsResource(enc);
@@ -37,6 +37,15 @@ public class FileController {
         return fileService.attachFileDownload(resource);
     }
 	
+	@GetMapping("/image/{imgname}")
+	public ResponseEntity<Resource> imageLoad(@PathVariable String imgname){
+		return fileService.getImageAsResource(imgname);
+	}
+	
+	@GetMapping("/music/{musicname}")
+	public void midiLoad(@PathVariable String musicname) {
+		
+	}
 	//mp4
 	@GetMapping("/res/download2.do")
 	public ModelAndView download2(@RequestParam("m") String m, HttpServletRequest request

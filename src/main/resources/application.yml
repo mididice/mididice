@@ -6,3 +6,7 @@ server:
 spring:
   mvc:
     static-path-pattern: /resources/**
+file:
+  save-dir: ./save
+  image-dir: ./resimg
+  

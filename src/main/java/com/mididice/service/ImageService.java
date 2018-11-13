@@ -5,8 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -16,11 +18,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
+import com.mididice.exception.FileStorageException;
+import com.mididice.property.FileStorageProperties;
+
 
 @Service
 public class ImageService {
 	private static final Logger logger = LoggerFactory.getLogger(ImageService.class);
 
+	private final Path fileStorageLocation;
+	public ImageService(FileStorageProperties fileStorageProperties) {
+		this.fileStorageLocation = Paths.get(fileStorageProperties.getResImg()).toAbsolutePath().normalize();
+		try {
+			Files.createDirectories(this.fileStorageLocation);
+		} catch (Exception ex) {
+			throw new FileStorageException("Could not create dir", ex);
+		}
+	}
 	//receive variable (bar count), (filename.midi array)
 	public String mergeImage( String bar, String imgNames[], String filename){
 
@@ -28,9 +42,7 @@ public class ImageService {
 		String resultImgPath = null;
 		try {
 			URL patternDir = ResourceUtils.getURL("classpath:static/images/patterns/");
-			URL resImgDir = ResourceUtils.getURL("classpath:static/resimg/");
 			patternPath = patternDir.getPath();
-			resultImgPath = resImgDir.getPath();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -84,13 +96,14 @@ public class ImageService {
 				graphics.drawImage(bf.get(2), 0, h, null);
 				graphics.drawImage(bf.get(3), w, h, null);
 			 */
-
-			ImageIO.write(merged, "jpg", new File(resultImgPath+"res_"+filename+".jpg"));
+			String resultImg = filename+".jpg";
+			Path targetLocation = this.fileStorageLocation.resolve(resultImg);
+			ImageIO.write(merged, "jpg", targetLocation.toFile());
 
 			//ImageIO.write(merged, "png", new File(patternPath+"rerere.png")); //result image file
 			// ImageIO.write(mergedImage, "jpg", new File("c:\\mergedImage.jpg"));
 			// ImageIO.write(mergedImage, "png", new File("c:\\mergedImage.png"));
-			String resultImg = "res_"+filename+".jpg";
+			
 			logger.info("generated image : ", resultImg);
 			return resultImg;
 		}catch (Exception e) {

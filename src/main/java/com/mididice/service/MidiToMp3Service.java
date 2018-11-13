@@ -5,11 +5,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
+
+import com.mididice.exception.FileStorageException;
+import com.mididice.property.FileStorageProperties;
 
 
 /*
@@ -18,13 +24,22 @@ import org.springframework.util.ResourceUtils;
 public class MidiToMp3Service {
 	//private final static String dirPath = "../resources/save";
 	private static final Logger logger = LoggerFactory.getLogger(MidiToMp3Service.class);
-
+	
+	private final Path fileStorageLocation;
+	public MidiToMp3Service(FileStorageProperties fileStorageProperties) {
+		this.fileStorageLocation = Paths.get(fileStorageProperties.getSaveDir()).toAbsolutePath().normalize();
+		try {
+			Files.createDirectories(this.fileStorageLocation);
+		} catch (Exception ex) {
+			throw new FileStorageException("Could not create dir", ex);
+		}
+	}
+	
 	public String midiToMp3(String fileName) {
 		
 		try {
-			URL midiDir = ResourceUtils.getURL("classpath:static/midi/");
-			String midiPath = midiDir.getPath();
-			String pathFileName = midiPath+fileName;
+			Path filePathName = fileStorageLocation.resolve(fileName+".mid");
+			String pathFileName = filePathName.toString();
 			//command midi
 			//String command = "timidity -Ow -o - "+midiPath+".mid | lame - "+midiPath+".mp3";
 			String[] command = {

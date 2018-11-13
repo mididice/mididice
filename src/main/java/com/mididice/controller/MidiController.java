@@ -70,8 +70,8 @@ public class MidiController {
 	
 	@GetMapping("/res/{enc}")
 	public String resultUrl(Model model, @PathVariable String enc){
-		model.addAttribute("midiFile", enc);
-		model.addAttribute("resImg","res_"+enc+".jpg");
+		model.addAttribute("midiFile", enc+".mp3");
+		model.addAttribute("resImg", enc+".jpg");
 		return "result"; 
 	}
 	

@@ -1,38 +1,57 @@
 package com.mididice.service;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
+import org.springframework.web.context.support.ServletContextResource;
 
+import com.mididice.exception.FileStorageException;
+import com.mididice.property.FileStorageProperties;
 import com.mididice.util.RandomString;
 
 @Service
 public class FileService {
 	private static final Logger logger = LoggerFactory.getLogger(FileService.class);
 
+	@Autowired
+	private ServletContext servletContext;
 	private static final int offset = 25;
 	RandomString r = new RandomString();
+	private final Path imageStorageLocation;
+	private final Path musicStorageLocation;
+	public FileService(FileStorageProperties fileStorageProperties) {
+		this.imageStorageLocation = Paths.get(fileStorageProperties.getResImg()).toAbsolutePath().normalize();
+		this.musicStorageLocation = Paths.get(fileStorageProperties.getSaveDir()).toAbsolutePath().normalize();
+		try {
+			Files.createDirectories(this.imageStorageLocation);
+			Files.createDirectories(this.musicStorageLocation);
+		} catch (Exception ex) {
+			throw new FileStorageException("Could not create dir", ex);
+		}
+	}
 	
 	public Resource loadFileAsResource(String enc) {
 		Resource resource = null;
 		
 		try {
-			URL resultDir = ResourceUtils.getURL("classpath:static/save/");
-			resource = new UrlResource(resultDir.toURI()+enc+".mp3");
+			Path targetLocation = musicStorageLocation.resolve(enc+".mp3");
+			resource = new ClassPathResource(targetLocation.toString());
+//			URL resultDir = ResourceUtils.getURL("classpath:static/save/");
+//			resource = new UrlResource(resultDir.toURI()+enc+".mp3");
 
 			if(resource.exists()) {
 				return resource;
@@ -64,6 +83,22 @@ public class FileService {
 	                    .body("Error Message");
 	        }
 
+	}
+	
+	public ResponseEntity<Resource> getImageAsResource(String imageName) {
+	    HttpHeaders headers = new HttpHeaders();
+		Path targetLocation = this.imageStorageLocation.resolve(imageName);
+	    Resource resource = 
+	      new ServletContextResource(servletContext, targetLocation.toString());
+	    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
+	
+	public ResponseEntity<Resource> getMusicAsResource(String mp3Name) {
+	    HttpHeaders headers = new HttpHeaders();
+		Path targetLocation = this.musicStorageLocation.resolve(mp3Name);
+	    Resource resource = 
+	      new ServletContextResource(servletContext, targetLocation.toString());
+	    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 	
 	public String encrypt(String filename) {

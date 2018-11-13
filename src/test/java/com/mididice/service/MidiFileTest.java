@@ -16,6 +16,8 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
 
@@ -32,5 +34,10 @@ public class MidiFileTest {
         list.addAll(Arrays.asList(listOfFiles));
         Collections.sort(list);
         assertEquals(list.get(0).getName(), "11.mid");
+	}
+	@Test
+	public void getNewResource() {
+		Resource resource = new ClassPathResource("/static/save/iu.mp3");
+		assertEquals(resource.getFilename(), "iu.mp3");
 	}
 }
