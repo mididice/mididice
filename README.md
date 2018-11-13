@@ -15,9 +15,14 @@ Role the dice and play generated music
 
 ### Installing
 
-the step will be
+the step will be on Ubuntu 16.04
 
 ```
+
+apt install openjdk-8-jdk
+apt install maven
+apt install timidity
+apt install lame
 
 ```
 
@@ -25,6 +30,7 @@ the step will be
 
 ```
 mvn package
+java -jar target/mididice-0.0.1.jar
 ```
 
 ## Built With

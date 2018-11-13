@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mididice.service.FileService;
@@ -38,11 +39,13 @@ public class FileController {
     }
 	
 	@GetMapping("/image/{imgname}")
+	@ResponseBody
 	public ResponseEntity<Resource> imageLoad(@PathVariable String imgname){
 		return fileService.getImageAsResource(imgname);
 	}
 	
 	@GetMapping("/music/{musicname}")
+	@ResponseBody
 	public ResponseEntity<Resource> midiLoad(@PathVariable String musicname) {
 		return fileService.getMusicAsResource(musicname);
 	}
