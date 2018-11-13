@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.support.ServletContextResource;
 
 import com.mididice.exception.FileStorageException;
 import com.mididice.property.FileStorageProperties;
@@ -27,10 +26,9 @@ import com.mididice.util.RandomString;
 public class FileService {
 	private static final Logger logger = LoggerFactory.getLogger(FileService.class);
 
-	@Autowired
-	private ServletContext servletContext;
 	private static final int offset = 25;
 	RandomString r = new RandomString();
+	
 	private final Path imageStorageLocation;
 	private final Path musicStorageLocation;
 	public FileService(FileStorageProperties fileStorageProperties) {
@@ -89,7 +87,7 @@ public class FileService {
 	    HttpHeaders headers = new HttpHeaders();
 		Path targetLocation = this.imageStorageLocation.resolve(imageName);
 	    Resource resource = 
-	      new ServletContextResource(servletContext, targetLocation.toString());
+	    		new ClassPathResource(targetLocation.toString());
 	    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 	
@@ -97,7 +95,7 @@ public class FileService {
 	    HttpHeaders headers = new HttpHeaders();
 		Path targetLocation = this.musicStorageLocation.resolve(mp3Name);
 	    Resource resource = 
-	      new ServletContextResource(servletContext, targetLocation.toString());
+	    		new ClassPathResource(targetLocation.toString());
 	    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 	
