@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,6 +13,8 @@ import javax.imageio.ImageIO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -38,15 +38,6 @@ public class ImageService {
 	//receive variable (bar count), (filename.midi array)
 	public String mergeImage( String bar, String imgNames[], String filename){
 
-		String patternPath = null;
-		String resultImgPath = null;
-		try {
-			URL patternDir = ResourceUtils.getURL("classpath:static/images/patterns/");
-			patternPath = patternDir.getPath();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
 		int s = (int)Math.sqrt(Integer.parseInt(bar));  //bar count
 		String barimg[][] = new String[s][s];
 
@@ -59,13 +50,12 @@ public class ImageService {
 		}
 		//String barimg2[][] = {{"22","11","11"},{"22","11","11"},{"22","11","11"},{"22","11","11"}};
 		ArrayList<BufferedImage> bf = new ArrayList<BufferedImage>();
-
+		Resource imageResource = null;
 		try {
 			for(int i=0;i<s;i++){
 				for(int j=0;j<s;j++){
-					File f = new File(patternPath+barimg[i][j]+".png");
-//					System.out.println(f.getAbsolutePath());
-					BufferedImage image = ImageIO.read(f); 
+					imageResource = new ClassPathResource("/static/images/patterns/"+barimg[i][j]+".png");
+					BufferedImage image = ImageIO.read(imageResource.getInputStream());
 					bf.add(image);
 
 //					if(f.exists()){
@@ -107,6 +97,7 @@ public class ImageService {
 			logger.info("generated image : ", resultImg);
 			return resultImg;
 		}catch (Exception e) {
+			e.printStackTrace();
 			logger.error("exception generated image");
 			return "";
 		}

@@ -43,8 +43,8 @@ public class FileController {
 	}
 	
 	@GetMapping("/music/{musicname}")
-	public void midiLoad(@PathVariable String musicname) {
-		
+	public ResponseEntity<Resource> midiLoad(@PathVariable String musicname) {
+		return fileService.getMusicAsResource(musicname);
 	}
 	//mp4
 	@GetMapping("/res/download2.do")
