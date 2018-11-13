@@ -1,6 +1,7 @@
 package com.mididice.service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -43,7 +44,7 @@ public class MidiToMp3Service {
 			String[] command = {
 					"/bin/sh",
 					"-c",
-					"timidity -Ow -o - "+pathFileName+" | lame - "+fileName+".mp3"
+					"timidity -Ow -o - "+pathFileName+" | lame - "+fileStorageLocation.toAbsolutePath()+File.separator+fileName+".mp3"
 					};
 			logger.info("converted command is {}", (Object)command);
 			
