@@ -49,7 +49,7 @@ public class FileService {
 		
 		try {
 			Path targetLocation = musicStorageLocation.resolve(enc+".mp3");
-			resource = new ClassPathResource(targetLocation.toString());
+			resource = new UrlResource(targetLocation.toUri());
 //			URL resultDir = ResourceUtils.getURL("classpath:static/save/");
 //			resource = new UrlResource(resultDir.toURI()+enc+".mp3");
 
