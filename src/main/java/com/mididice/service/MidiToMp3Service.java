@@ -49,9 +49,9 @@ public class MidiToMp3Service {
 				
 			}else {
 				//String command = "timidity -Ow -o - "+midiPath+".mid | lame - "+midiPath+".mp3";
-				commandList.add("/bin/sh");
-				commandList.add("-c");
-				commandList.add("timidity -Ow -o -");
+				commandList.add("/bin/sh ");
+				commandList.add("-c ");
+				commandList.add("timidity -Ow -o - ");
 				commandList.add(pathFileName);
 				commandList.add(" | ");
 				commandList.add("lame - ");

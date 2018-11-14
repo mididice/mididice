@@ -19,6 +19,8 @@ the step will be on Ubuntu 16.04
 
 ```
 
+git clone https://github.com/mididice/mididice
+cd mididice
 apt install openjdk-8-jdk
 apt install maven
 apt install timidity
