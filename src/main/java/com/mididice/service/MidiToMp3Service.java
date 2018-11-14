@@ -53,7 +53,6 @@ public class MidiToMp3Service {
 			}
 			
 			Runtime rt = Runtime.getRuntime();
-			command = commandList.toArray(new String[0]);
 			logger.info("converted command is {}", (Object)command);
 			
 			Process p = rt.exec(command);
