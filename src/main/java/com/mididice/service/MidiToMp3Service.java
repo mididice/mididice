@@ -43,20 +43,13 @@ public class MidiToMp3Service {
 			Path filePathName = fileStorageLocation.resolve(fileName+".mid");
 			String pathFileName = filePathName.toString();
 			List<String> commandList = new ArrayList<String>();
-			String[] command = null;
+			String[] command = {
+					"/bin/sh",
+					"-c",
+					"timidity -Ow -o - "+pathFileName+" | lame - "+filePathName.toAbsolutePath()+File.separator+fileName+".mp3"
+					};
 			if(isWindows()) {
 				return "";
-				
-			}else {
-				//String command = "timidity -Ow -o - "+midiPath+".mid | lame - "+midiPath+".mp3";
-				commandList.add("/bin/sh");
-				commandList.add("-c");
-				commandList.add("timidity -Ow -o - ");
-				commandList.add(pathFileName);
-				commandList.add(" | ");
-				commandList.add("lame - ");
-				commandList.add(fileStorageLocation.toAbsolutePath()+File.separator+fileName+".mp3");
-	
 			}
 			
 			Runtime rt = Runtime.getRuntime();
