@@ -8,9 +8,12 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.mididice.exception.FileStorageException;
@@ -33,22 +36,32 @@ public class MidiToMp3Service {
 			throw new FileStorageException("Could not create dir", ex);
 		}
 	}
-	
+	@Async
 	public String midiToMp3(String fileName) {
 		
 		try {
 			Path filePathName = fileStorageLocation.resolve(fileName+".mid");
 			String pathFileName = filePathName.toString();
-			//command midi
-			//String command = "timidity -Ow -o - "+midiPath+".mid | lame - "+midiPath+".mp3";
-			String[] command = {
-					"/bin/sh",
-					"-c",
-					"timidity -Ow -o - "+pathFileName+" | lame - "+fileStorageLocation.toAbsolutePath()+File.separator+fileName+".mp3"
-					};
-			logger.info("converted command is {}", (Object)command);
+			List<String> commandList = new ArrayList<String>();
+			String[] command = null;
+			if(isWindows()) {
+				return "";
+				
+			}else {
+				//String command = "timidity -Ow -o - "+midiPath+".mid | lame - "+midiPath+".mp3";
+				commandList.add("/bin/sh");
+				commandList.add("-c");
+				commandList.add("timidity -Ow -o -");
+				commandList.add(pathFileName);
+				commandList.add(" | ");
+				commandList.add("lame - ");
+				commandList.add(fileStorageLocation.toAbsolutePath()+File.separator+fileName+".mp3");
+	
+			}
 			
 			Runtime rt = Runtime.getRuntime();
+			command = commandList.toArray(new String[0]);
+			logger.info("converted command is {}", (Object)command);
 			
 			Process p = rt.exec(command);
 			StreamGobbler errorGobbler = new StreamGobbler(p.getErrorStream(), "error");
@@ -66,6 +79,14 @@ public class MidiToMp3Service {
 			return "";
 		}
 		
+	}
+	
+	private boolean isWindows() {
+		String os = System.getProperty("os.name");
+		if(os.contains("Window")) {
+			return true; 
+		}
+		return false;
 	}
 }
 class StreamGobbler extends Thread
