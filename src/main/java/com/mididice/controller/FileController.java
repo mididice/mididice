@@ -1,6 +1,7 @@
 package com.mididice.controller;
 
 import java.io.File;
+import java.net.MalformedURLException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,13 +41,13 @@ public class FileController {
 	
 	@GetMapping("/image/{imgname}")
 	@ResponseBody
-	public ResponseEntity<Resource> imageLoad(@PathVariable String imgname){
+	public ResponseEntity<Resource> imageLoad(@PathVariable String imgname) throws MalformedURLException{
 		return fileService.getImageAsResource(imgname);
 	}
 	
 	@GetMapping("/music/{musicname}")
 	@ResponseBody
-	public ResponseEntity<Resource> midiLoad(@PathVariable String musicname) {
+	public ResponseEntity<Resource> midiLoad(@PathVariable String musicname) throws MalformedURLException {
 		return fileService.getMusicAsResource(musicname);
 	}
 	//mp4

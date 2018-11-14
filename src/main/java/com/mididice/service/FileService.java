@@ -1,6 +1,7 @@
 package com.mididice.service;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -83,19 +85,19 @@ public class FileService {
 
 	}
 	
-	public ResponseEntity<Resource> getImageAsResource(String imageName) {
+	public ResponseEntity<Resource> getImageAsResource(String imageName) throws MalformedURLException {
 	    HttpHeaders headers = new HttpHeaders();
 		Path targetLocation = this.imageStorageLocation.resolve(imageName);
-	    Resource resource = 
-	    		new ClassPathResource(targetLocation.toString());
+	    Resource resource = new UrlResource(targetLocation.toUri());
 	    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 	
-	public ResponseEntity<Resource> getMusicAsResource(String mp3Name) {
+	public ResponseEntity<Resource> getMusicAsResource(String mp3Name) throws MalformedURLException {
 	    HttpHeaders headers = new HttpHeaders();
 		Path targetLocation = this.musicStorageLocation.resolve(mp3Name);
-	    Resource resource = 
-	    		new ClassPathResource(targetLocation.toString());
+		System.out.println(targetLocation.toAbsolutePath());
+		System.out.println(targetLocation.toString());
+	    Resource resource = new UrlResource(targetLocation.toUri());
 	    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 	
