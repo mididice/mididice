@@ -46,7 +46,7 @@ public class MidiToMp3Service {
 			String[] command = {
 					"/bin/sh",
 					"-c",
-					"timidity -Ow -o - "+pathFileName+" | lame - "+filePathName.toAbsolutePath()+File.separator+fileName+".mp3"
+					"timidity -Ow -o - "+pathFileName+" | lame - "+fileStorageLocation.toAbsolutePath()+File.separator+fileName+".mp3"
 					};
 			if(isWindows()) {
 				return "";
