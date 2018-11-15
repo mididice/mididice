@@ -40,6 +40,10 @@ java -jar target/mididice-0.0.1.jar
 * [spring-boot](http://spring.io/projects/spring-boot) - spring based application
 * [maven](https://maven.apache.org/) - project management
 
+## Screenshot
+
+![alt text](https://github.com/mididice/mididice/blob/master/main.PNG)
+
 ## Started From
 
 [midiyapp](https://github.com/nine-hundred/midiyapp) - origin project

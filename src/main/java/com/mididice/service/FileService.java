@@ -6,12 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.servlet.ServletContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -48,7 +44,7 @@ public class FileService {
 		Resource resource = null;
 		
 		try {
-			Path targetLocation = musicStorageLocation.resolve(enc+".mp3");
+			Path targetLocation = musicStorageLocation.resolve(enc);
 			resource = new UrlResource(targetLocation.toUri());
 //			URL resultDir = ResourceUtils.getURL("classpath:static/save/");
 //			resource = new UrlResource(resultDir.toURI()+enc+".mp3");
@@ -84,7 +80,7 @@ public class FileService {
 	        }
 
 	}
-	
+	// it need to exception handler
 	public ResponseEntity<Resource> getImageAsResource(String imageName) throws MalformedURLException {
 	    HttpHeaders headers = new HttpHeaders();
 		Path targetLocation = this.imageStorageLocation.resolve(imageName);
@@ -95,8 +91,6 @@ public class FileService {
 	public ResponseEntity<Resource> getMusicAsResource(String mp3Name) throws MalformedURLException {
 	    HttpHeaders headers = new HttpHeaders();
 		Path targetLocation = this.musicStorageLocation.resolve(mp3Name);
-		System.out.println(targetLocation.toAbsolutePath());
-		System.out.println(targetLocation.toString());
 	    Resource resource = new UrlResource(targetLocation.toUri());
 	    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
