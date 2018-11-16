@@ -40,11 +40,6 @@ public class MidiService {
 		Resource midiResource = null;
 		try {
 			
-//			URL resultDir = ResourceUtils.getURL("classpath:static/save/");
-//			URL midiDir = ResourceUtils.getURL("classpath:static/midi/");
-//			resultPath = resultDir.getPath();
-//			midiPath = midiDir.getPath();
-//			
 			if(names!=null){
 				for(int i = 0; i<names.length; i++){					
 					midiResource = new ClassPathResource("/static/midi/"+names[i]);

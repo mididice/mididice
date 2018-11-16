@@ -42,7 +42,6 @@ public class MidiToMp3Service {
 		try {
 			Path filePathName = fileStorageLocation.resolve(fileName+".mid");
 			String pathFileName = filePathName.toString();
-			List<String> commandList = new ArrayList<String>();
 			String[] command = {
 					"/bin/sh",
 					"-c",
