@@ -33,7 +33,7 @@ $(document).on("click","#result",function() {
 var imgSrc;
 $(document).on("mouseenter",".another_love",function(){
 	imgSrc = $(this).children().find('.pattern_img').attr("src");
-	$(this).children().find('.pattern_img').attr('src', '/resources/images/play_midi.png');
+	$(this).children().find('.pattern_img').attr('src', 'resources/images/play_midi.png');
 });
 $(document).on("mouseleave",".another_love",function(){
 	$(this).children().find('.pattern_img').attr('src', imgSrc);
@@ -42,14 +42,14 @@ function animateDice(purpleDice, pinkDice) {
     var i = 0;
     var timer = setInterval(function(){
     	if(i<10){
-    		$('.midi_dice_right').children().first().attr('src', '/resources/images/dice/VioletDice01_0000'+i+'.png');	
-    		$('.midi_dice_left').children().first().attr('src', '/resources/images/dice/PinkDice01_0000'+i+'.png');
+    		$('.midi_dice_right').children().first().attr('src', 'resources/images/dice/VioletDice01_0000'+i+'.png');	
+    		$('.midi_dice_left').children().first().attr('src', 'resources/images/dice/PinkDice01_0000'+i+'.png');
     	}else if(i<60){
-        	$('.midi_dice_right').children().first().attr('src', '/resources/images/dice/VioletDice01_000'+i+'.png');            
-        	$('.midi_dice_left').children().first().attr('src', '/resources/images/dice/PinkDice01_000'+i+'.png');            
+        	$('.midi_dice_right').children().first().attr('src', 'resources/images/dice/VioletDice01_000'+i+'.png');            
+        	$('.midi_dice_left').children().first().attr('src', 'resources/images/dice/PinkDice01_000'+i+'.png');            
         }else{
-        	$('.midi_dice_right').children().first().attr('src', '/resources/images/dice/VioletDice0'+purpleDice+'.png');
-        	$('.midi_dice_left').children().first().attr('src', '/resources/images/dice/PinkDice0'+pinkDice+'.png');
+        	$('.midi_dice_right').children().first().attr('src', 'resources/images/dice/VioletDice0'+purpleDice+'.png');
+        	$('.midi_dice_left').children().first().attr('src', 'resources/images/dice/PinkDice0'+pinkDice+'.png');
         	clearInterval(timer);
         	return;
         }
@@ -57,8 +57,8 @@ function animateDice(purpleDice, pinkDice) {
     }, 33)
 };
 var callback = function(midipath, pattern, seq){
-	$('#patterns').append("<div class='another_love'><a href='#' id='samdasu' onClick='MIDIjs.play(\"/resources/midi/"+midipath+"\");'>"
-			+"<img src='/resources/images/patterns/"
+	$('#patterns').append("<div class='another_love'><a href='#' id='samdasu' onClick='MIDIjs.play(\"resources/midi/"+midipath+"\");'>"
+			+"<img src='resources/images/patterns/"
 			+pattern+"' class='pattern_img' id='pattern"+seq+"'>");
 		
 		if(seq==0){
@@ -200,7 +200,7 @@ $(document).ready(function(){
 					
 					if(seq==bar-1){
 						$('.roll_dice_bottom').empty();
-						$('.roll_dice_bottom').append("<span class='roll_btn' id='result'><img src='/resources/images/result.png'></span>");
+						$('.roll_dice_bottom').append("<span class='roll_btn' id='result'><img src='resources/images/result.png'></span>");
 						$('.midi_dice_left').attr("id","result");
 						$("#result > img").addClass("resh");
 					}
