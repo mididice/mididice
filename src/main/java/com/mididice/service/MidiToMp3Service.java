@@ -36,7 +36,7 @@ public class MidiToMp3Service {
 			throw new FileStorageException("Could not create dir", ex);
 		}
 	}
-	@Async
+	
 	public String midiToMp3(String fileName) {
 		
 		try {

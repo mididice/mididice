@@ -59,9 +59,6 @@ public class MidiController {
 		String url = "redirect:/res/"+enc;
 		
 		rediAttr.addFlashAttribute("midiFile", fileName);
-		rediAttr.addFlashAttribute("seconds", seconds);
-		rediAttr.addFlashAttribute("bar", bar);
-		rediAttr.addFlashAttribute("bpm", bpm);
 		rediAttr.addFlashAttribute("resImg", resImg);
 		logger.info("midi output :", mp3Name);
 		return url;
