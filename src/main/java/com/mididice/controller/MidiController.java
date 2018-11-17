@@ -19,6 +19,7 @@ import com.mididice.service.MidiService;
 import com.mididice.service.MidiToMp3Service;
 
 @Controller
+@RequestMapping("/mididice")
 public class MidiController {
 	private static final Logger logger = LoggerFactory.getLogger(MidiController.class);
 	
@@ -56,7 +57,7 @@ public class MidiController {
 		//append image 3x3, 4x4, 5x5 
 		String resImg = imageService.mergeImage(bar, imgNames, enc);
 		
-		String url = "redirect:/res/"+enc;
+		String url = "redirect:/mididice/res/"+enc;
 		
 		rediAttr.addFlashAttribute("midiFile", fileName);
 		rediAttr.addFlashAttribute("resImg", resImg);

@@ -31,7 +31,7 @@ var wavesurfer = WaveSurfer.create({
 
 var fileName = $('#fileName').val();
 
-wavesurfer.load('music/'+fileName);
+wavesurfer.load('/mididice/music/'+fileName);
 wavesurfer.on('ready',function(){
 	_showPage();
 	$("wave:first-child").css('height','25px');
@@ -55,7 +55,7 @@ $(function(){
 //파일 다운로드
 function downMp3(){
 	var enc = $('#fileName').val();
-	window.open("download/"+enc);
+	window.open("/mididice/download/"+enc);
 }
 $(document).ready(function(){
 	var fileName = $('#fileName').val();

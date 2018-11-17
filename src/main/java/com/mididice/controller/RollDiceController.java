@@ -1,12 +1,14 @@
 package com.mididice.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mididice.service.DiceService;
 
 @RestController
+@RequestMapping("/mididice")
 public class RollDiceController {
 	
 	private DiceService diceService;
