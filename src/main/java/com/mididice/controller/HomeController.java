@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Handles requests for the application home page.
  */
 @Controller
-@RequestMapping("/mididice")
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -21,11 +20,17 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@GetMapping("/")
+	@GetMapping("/mididice/")
 	public String home(Locale locale, Model model) {
 		logger.info("The client locale is {}.", locale);
 		
 		return "home";
+	}
+	@GetMapping("/mididice")
+	public String mididiceHome(Locale locale, Model model) {
+		logger.info("The client locale is {}.", locale);
+		
+		return "redirect:/mididice/";
 	}
 	
 }
