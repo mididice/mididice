@@ -7,11 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mididice.service.ImageService;
@@ -19,7 +15,6 @@ import com.mididice.service.MidiService;
 import com.mididice.service.MidiToMp3Service;
 
 @Controller
-@RequestMapping("/mididice")
 public class MidiController {
 	private static final Logger logger = LoggerFactory.getLogger(MidiController.class);
 	
@@ -33,13 +28,11 @@ public class MidiController {
 		this.imageService = imageService;
 	}
 	
-	/*
-	 * 
+	/**
 	 * iputfile list(max 36)
 	 * outfile name
-	 * 
 	 * */
-	@RequestMapping(value="/save", method=RequestMethod.POST)
+	@PostMapping(value="/save")
 	public String appendMidiTest(
 			@RequestParam(value="midis")String[] names, //11.midi
 			@RequestParam(value="seconds")String seconds,
@@ -57,7 +50,7 @@ public class MidiController {
 		//append image 3x3, 4x4, 5x5 
 		String resImg = imageService.mergeImage(bar, imgNames, enc);
 		
-		String url = "redirect:/mididice/res/"+enc;
+		String url = "redirect:/res/"+enc;
 		
 		rediAttr.addFlashAttribute("midiFile", fileName);
 		rediAttr.addFlashAttribute("resImg", resImg);

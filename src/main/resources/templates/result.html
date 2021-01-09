@@ -14,14 +14,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>midiDICE</title>
-<link rel="stylesheet" href="/mididice/css/mididice.css">
+<link rel="stylesheet" href="/css/mididice.css">
 </head>
 <body>
 <!-- header -->
 	<header>
 		<div class="header" id="header">
-			<a href="/mididice" class="midiyapp_logo"><img src="/mididice/images/main.png" alt="midiDice_logo"></a>
-			<a href="/mididice"><span class="midiyapp_reset"></span></a>
+			<a href="/" class="midiyapp_logo"><img src="/images/main.png" alt="midiDice_logo"></a>
+			<a href="/"><span class="midiyapp_reset"></span></a>
 		</div>
 	</header>
 	<!-- center -->
@@ -43,15 +43,15 @@
 						<p class="set_value_result" id="seconds"></p>
 					</div>
 					<div class="">
-						<img class="midi_result_img" th:src="'/mididice/image/'+${resImg}">
+						<img class="midi_result_img" th:src="'/image/'+${resImg}">
 					</div>
 				</div>
 				
 				<div class="midi_res_btn">
 					<div>
-						<a href="javascript:wavesurfer.playPause()"><img src="/mididice/images/play.png" class="play_m"></a>
-						<a id="down" href="javascript:downMp3();"><img src="/mididice/images/download.png" class="down_m"></a>
-						<a href=""><img src="/mididice/images/share.png" class="share_m"></a>
+						<a href="javascript:wavesurfer.playPause()"><img src="/images/play.png" class="play_m"></a>
+						<a id="down" href="javascript:downMp3();"><img src="/images/download.png" class="down_m"></a>
+						<a href=""><img src="/images/share.png" class="share_m"></a>
 					</div>
 				</div>
 				<form action="" name="merge" method="post">
@@ -73,8 +73,8 @@
 		</div>
 	</section>
 	<!-- Scripts -->
-	<script src="/mididice/js/jquery.min.js"></script>
-	<script type="text/javascript" src="/mididice/js/wavesufer.min.js"></script>
-	<script type="text/javascript" src="/mididice/js/app/mididiceresult.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/wavesufer.min.js"></script>
+	<script type="text/javascript" src="/js/app/mididiceresult.js"></script>
 	</body>
 </html>

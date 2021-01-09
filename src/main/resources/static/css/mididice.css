@@ -45,7 +45,7 @@ div{
 .midiyapp_logo > img{
 	width: 87%;
 }
-.midiyapp_reset{background:url("/mididice/images/reset.png") no-repeat;
+.midiyapp_reset{background:url("/images/reset.png") no-repeat;
 height:25px; width:90px;
 display:inline-block; float:right;    margin-left: 30px;
     margin-top: 18px;

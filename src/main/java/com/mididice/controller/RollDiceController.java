@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mididice.service.DiceService;
 
 @RestController
-@RequestMapping("/mididice")
 public class RollDiceController {
 	
 	private DiceService diceService;

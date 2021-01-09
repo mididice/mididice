@@ -3,9 +3,6 @@ server:
   error:
     whitelabel:
       enabled: false
-spring:
-  mvc:
-    static-path-pattern: /mididice/**
 file:
   save-dir: ./save
   image-dir: ./resimg

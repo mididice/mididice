@@ -22,7 +22,6 @@ import com.mididice.service.FileService;
 
 @ControllerAdvice
 @Controller
-@RequestMapping("/mididice")
 public class FileController {
 	private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
